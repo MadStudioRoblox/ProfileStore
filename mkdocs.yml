@@ -1,0 +1,45 @@
+site_name: ProfileStore
+site_url: https://madstudioroblox.github.io/ProfileStore
+repo_name: MadStudioRoblox/ProfileStore
+repo_url: https://github.com/MadStudioRoblox/ProfileStore
+
+theme:
+  icon:
+    logo: material/database
+  name: material
+  favicon: images/favicon.png
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - toc.integrate
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.annotation
+    - content.code.copy
+  language: en
+  palette:
+    - scheme: slate 
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode    
+      primary: indigo
+      accent: lime
+    - scheme: default
+      toggle:
+        icon: material/toggle-switch-off-outline 
+        name: Switch to dark mode
+      primary: indigo
+      accent: purple 
+
+nav:
+  - Home: index.md
+  - API: api.md
+  - Tutorial: tutorial/index.md
+  - Troubleshooting: troubleshooting/index.md
+
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight
+  - pymdownx.superfences
