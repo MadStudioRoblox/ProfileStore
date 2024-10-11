@@ -1,0 +1,8 @@
+[package]
+name = "MadStudioRoblox/ProfileStore"
+description = "Periodic DataStore saving solution with session locking"
+version = "1.0.0"
+registry = "https://github.com/UpliftGames/wally-index"
+realm = "server"
+
+[dependencies]

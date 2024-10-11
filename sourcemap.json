@@ -1,0 +1,5 @@
+{
+    "name":"MadStudioRoblox/ProfileStore",
+    "className":"ModuleScript",
+    "filePaths":["ProfileStore.luau","default.project.json"]
+}
