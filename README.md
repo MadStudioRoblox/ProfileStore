@@ -1,4 +1,4 @@
-# Home
+# Madwork - ProfileStore
 
 ProfileStore is a Roblox DataStore wrapper that streamlines auto-saving, session locking
 and a few other features for the game developer. ProfileStore's source code runs on a single
