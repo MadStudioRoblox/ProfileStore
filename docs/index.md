@@ -9,6 +9,8 @@ If you want to save time writing code for player data caching or want to prevent
 
 💲💲💲 *Consider [donating R$ to the creator of ProfileStore (Click here)](https://www.roblox.com/games/103946622805308/MAD-STUDIO-Open-Source-Donations) if you find this resource helpful!*
 
+If you need help integrating ProfileStore into your project, [join the discussion on the Roblox forums (Click here)](https://devforum.roblox.com/t/profilestore/3190543).
+
 ## How does it work?
 
 ProfileStore loads and caches data from a DataStore key on a single Roblox game server and
