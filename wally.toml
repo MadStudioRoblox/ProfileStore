@@ -1,7 +1,7 @@
 [package]
 name = "lm-loleris/profilestore"
 description = "Periodic DataStore saving solution with session locking"
-version = "1.0.0"
+version = "1.0.1"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "server"
 
