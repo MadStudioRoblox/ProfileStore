@@ -127,11 +127,7 @@ end
 function PurchaseIdCheckAsync(profile, purchase_id, grant_product): Enum.ProductPurchaseDecision
     -- Waits until purchase_id is confirmed to be saved to the DataStore or the profile session has ended
 
-    if profile:IsActive() ~= true then
-
-        return Enum.ProductPurchaseDecision.NotProcessedYet
-
-    else
+    if profile:IsActive() == true then
 
         local purchase_id_cache = profile.Data.PurchaseIdCache
 
@@ -189,9 +185,9 @@ function PurchaseIdCheckAsync(profile, purchase_id, grant_product): Enum.Product
 
         end
 
-        return Enum.ProductPurchaseDecision.NotProcessedYet
-
     end
+
+    return Enum.ProductPurchaseDecision.NotProcessedYet
 
 end
 
