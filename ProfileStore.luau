@@ -170,8 +170,8 @@ MAD STUDIO (by loleris)
 local AUTO_SAVE_PERIOD = 300 -- (Seconds) Time between when changes to a profile are saved to the DataStore
 local LOAD_REPEAT_PERIOD = 10 -- (Seconds) Time between successive profile reads when handling a session conflict
 local FIRST_LOAD_REPEAT = 5 -- (Seconds) Time between first and second profile read when handling a session conflict
-local SESSION_STEAL = 90 -- (Seconds) Time until a session conflict is resolved with the waiting server stealing the session
-local ASSUME_DEAD = 600 -- (Seconds) If a profile hasn't had updates for this long, quickly assume an active session belongs to a crashed server
+local SESSION_STEAL = 40 -- (Seconds) Time until a session conflict is resolved with the waiting server stealing the session
+local ASSUME_DEAD = 630 -- (Seconds) If a profile hasn't had updates for this long, quickly assume an active session belongs to a crashed server
 local START_SESSION_TIMEOUT = 120 -- (Seconds) If a session can't be started for a profile for this long, stop repeating calls to the DataStore
 
 local CRITICAL_STATE_ERROR_COUNT = 5 -- Assume critical state if this many issues happen in a short amount of time
@@ -1593,8 +1593,14 @@ function ProfileStore:StartSessionAsync(profile_key, params)
 		else
 			
 			-- A DataStore call has likely ended in an error:
+
+			local default_timeout = false
+
+			if params.Cancel == nil then
+				default_timeout = os.clock() - start >= START_SESSION_TIMEOUT
+			end
 			
-			if os.clock() - start >= START_SESSION_TIMEOUT or ProfileStore.IsClosing == true or cancel_condition() == true then
+			if default_timeout == true or ProfileStore.IsClosing == true or cancel_condition() == true then
 				ActiveProfileLoadJobs = ActiveProfileLoadJobs - 1
 				return nil
 			end
