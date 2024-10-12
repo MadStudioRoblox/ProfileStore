@@ -17,10 +17,10 @@ ProfileStore also uses Roblox [MessagingService](https://create.roblox.com/docs/
 
 - Usually uses 1 [`:UpdateAsync()`](https://create.roblox.com/docs/reference/engine/classes/GlobalDataStore#UpdateAsync) call.
 - If another server currently has a session started for the same profile, uses 1 [`:UpdateAsync()`](https://create.roblox.com/docs/reference/engine/classes/GlobalDataStore#UpdateAsync) call
-and 1 [:PublishAsync()](https://create.roblox.com/docs/reference/engine/classes/MessagingService#PublishAsync) call,
+and 1 [`:PublishAsync()`](https://create.roblox.com/docs/reference/engine/classes/MessagingService#PublishAsync) call,
 then 5 seconds later (`FIRST_LOAD_REPEAT`) will perform 1 [`:UpdateAsync()`](https://create.roblox.com/docs/reference/engine/classes/GlobalDataStore#UpdateAsync) call and 1 
-[:PublishAsync()](https://create.roblox.com/docs/reference/engine/classes/MessagingService#PublishAsync) call. While the session conflict is not resolved,
-1 [`:UpdateAsync()`](https://create.roblox.com/docs/reference/engine/classes/GlobalDataStore#UpdateAsync) call and 1 [:PublishAsync()](https://create.roblox.com/docs/reference/engine/classes/MessagingService#PublishAsync)
+[`:PublishAsync()`](https://create.roblox.com/docs/reference/engine/classes/MessagingService#PublishAsync) call. While the session conflict is not resolved,
+1 [`:UpdateAsync()`](https://create.roblox.com/docs/reference/engine/classes/GlobalDataStore#UpdateAsync) call and 1 [`:PublishAsync()`](https://create.roblox.com/docs/reference/engine/classes/MessagingService#PublishAsync)
 call will be repeated in 10 second intervals (`LOAD_REPEAT_PERIOD`) for the next 40 seconds (`SESSION_STEAL`) until finally a session will be stolen (1 [`:UpdateAsync()`](https://create.roblox.com/docs/reference/engine/classes/GlobalDataStore#UpdateAsync) call). Expect all of these calls to happen when players rejoin your game immediately after experiencing a server crash.
 
 **After a session is started and until the session ends:**
@@ -41,7 +41,7 @@ if a [`MessagingService`](https://create.roblox.com/docs/reference/engine/classe
 ##  [`:MessageAsync()`](/ProfileStore/api/#startsessionasync)
 
 - Uses 1 [`:UpdateAsync()`](https://create.roblox.com/docs/reference/engine/classes/GlobalDataStore#UpdateAsync) call and 1
-[:PublishAsync()](https://create.roblox.com/docs/reference/engine/classes/MessagingService#PublishAsync) call.
+[`:PublishAsync()`](https://create.roblox.com/docs/reference/engine/classes/MessagingService#PublishAsync) call.
 - If there's a server that currently has a session started for the targeted profile, 1 [`:UpdateAsync()`](https://create.roblox.com/docs/reference/engine/classes/GlobalDataStore#UpdateAsync) call
 will be used on that server regardless of whether [`:MessageAsync()`](/ProfileStore/api/#startsessionasync) was called on the same server. The 300 second auto-save interval timer would also be reset in this scenario.
 ProfileStore does not assume developer code would immediately process a message sent by [`:MessageAsync()`](/ProfileStore/api/#startsessionasync) on the same server at all times, so
