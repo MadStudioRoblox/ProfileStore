@@ -1,7 +1,7 @@
 This is a resource that can help you implement [Developer Products](https://create.roblox.com/docs/production/monetization/developer-products) into your
 Roblox game when you're also using ProfileStore.
 
-There are two ways you could handle [Developer Products](https://create.roblox.com/docs/production/monetization/developer-products) purchases -
+There are two ways you could handle [Developer Product](https://create.roblox.com/docs/production/monetization/developer-products) purchases -
 one way is based on the [official Roblox documentation on handling developer product purchases], while the other way is based on
 observations on how [Roblox MarketplaceService API](https://create.roblox.com/docs/reference/engine/classes/MarketplaceService) works.
 
