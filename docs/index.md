@@ -66,9 +66,7 @@ ProfileStore.
 
 - **API cleanup** - Function and variable names have been changed to be shorter and more conventional.
 
-- **`MetaTags` removed in favor of `Profile.LastSavedData`** - MetaTags has been a piece of data
-exclusively used to verify data that has been successfully saved to the DataStore. `Profile.LastSavedData`
-will also satisfy this purpose, but will be a deep copy of `Profile.Data`.
+- **`MetaTags` removed in favor of `Profile.LastSavedData`** - MetaTags has been a piece of data exclusively used to verify data that has been successfully saved to the DataStore. `Profile.LastSavedData` will also satisfy this purpose - every time `Profile.Data` is saved to the DataStore, `Profile.LastSavedData` will be updated with the version of `Profile.Data` that has been successfully saved to the DataStore.
 
 - **New profile messaging system replacing `GlobalUpdates`** - GlobalUpdates was a complicated
 system for writing to profiles regardless of whether a server is currently running a session

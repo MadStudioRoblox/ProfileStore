@@ -38,6 +38,8 @@ nav:
   - API: api.md
   - Tutorial: tutorial/index.md
   - Troubleshooting: troubleshooting/index.md
+  - DataStore Use: datause/index.md
+  - Developer Products: devproducts/index.md
 
 markdown_extensions:
   - admonition

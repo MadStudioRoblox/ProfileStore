@@ -41,21 +41,13 @@ local Profiles: {[player]: typeof(PlayerStore:StartSessionAsync())} = {}
 
 local function PlayerAdded(player)
 
-   local profile
+   -- Start a profile session for this player's data:
 
-   -- This block of code tries to do everything to start a session for the player profile
-   -- as long as the player is still in-game. You can just copy this for your player data implementation:
-
-   while player.Parent == Players and ProfileStore.IsClosing == false do
-      profile = PlayerStore:StartSessionAsync(`{player.UserId}`, {
-         Cancel = function()
-            return player.Parent ~= Players
-         end,
-      })
-      if profile ~= nil then
-         break
-      end
-   end
+   local profile = PlayerStore:StartSessionAsync(`{player.UserId}`, {
+      Cancel = function()
+         return player.Parent ~= Players
+      end,
+   })
 
    -- Handling new profile session or failure to start it:
 

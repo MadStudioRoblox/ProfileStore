@@ -155,6 +155,8 @@ The second optional argument to `ProfileStore:StartSessionAsync()` is a table wi
 the profile session is still needed. If the profile is no longer needed, the `Cancel` function should return `true`.
 The `Cancel` argument would be useful in rare cases where the DataStores are unresponsive and a player leaves
 before a session was started allowing ProfileStore to stop making additional requests to the DataStore.
+Using the `Cancel` argument also disables the default ProfileStore session start timeout as the developer
+would decide when the profile is no longer needed.
 - **`Steal`** - (e.g. `{Steal = true}`) If set to `true`, doesn't let an active session make final changes to `Profile.Data`
 and immediately starts a session on the server calling `ProfileStore:StartSessionAsync()` with this argument.
 **DO NOT USE THIS ARGUMENT FOR LOADING PLAYER DATA NORMALLY** - The `Steal` argument bypasses session locks which are needed for item "dupe" prevention.
