@@ -38,7 +38,7 @@ this topic subscription will be ended when the profile session ends.
 (1'st call - external session request detected; 2'nd call - locally broadcasting a final save and ending the session) when resolving a session conflict
 if a [`MessagingService`](https://create.roblox.com/docs/reference/engine/classes/MessagingService) message asking for a session end was not received on time.
 
-##  [`:MessageAsync()`](/ProfileStore/api/#startsessionasync)
+##  [`:MessageAsync()`](/ProfileStore/api/#messageasync)
 
 - Uses 1 [`:UpdateAsync()`](https://create.roblox.com/docs/reference/engine/classes/GlobalDataStore#UpdateAsync) call and 1
 [`:PublishAsync()`](https://create.roblox.com/docs/reference/engine/classes/MessagingService#PublishAsync) call.
