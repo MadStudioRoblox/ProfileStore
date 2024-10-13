@@ -967,43 +967,45 @@ end
 
 --]]
 
+export type JSONAcceptable = { JSONAcceptable } | { [string]: JSONAcceptable } | number | string | boolean | buffer
+
 export type Profile<T> = {
-	Data: T & {[any]: any},
-	LastSavedData: T & {[any]: any},
+	Data: T & JSONAcceptable,
+	LastSavedData: T & JSONAcceptable,
 	FirstSessionTime: number,
 	SessionLoadCount: number,
 	Session: {PlaceId: number, JobId: string}?,
-	RobloxMetaData: {[any]: any},
-	UserIds: {[any]: any},
+	RobloxMetaData: JSONAcceptable,
+	UserIds: { number },
 	KeyInfo: DataStoreKeyInfo,
 	OnSave: {Connect: (self: any, listener: () -> ()) -> ({Disconnect: (self: any) -> ()})},
 	OnLastSave: {Connect: (self: any, listener: (reason: "Manual" | "External" | "Shutdown") -> ()) -> ({Disconnect: (self: any) -> ()})},
 	OnSessionEnd: {Connect: (self: any, listener: () -> ()) -> ({Disconnect: (self: any) -> ()})},
-	OnAfterSave: {Connect: (self: any, listener: (last_saved_data: T & {[any]: any}) -> ()) -> ({Disconnect: (self: any) -> ()})},
-	ProfileStore: {[any]: any},
+	OnAfterSave: {Connect: (self: any, listener: (last_saved_data: T & JSONAcceptable) -> ()) -> ({Disconnect: (self: any) -> ()})},
+	ProfileStore: JSONAcceptable,
 	Key: string,
 
-	IsActive: (self: any) -> (boolean),
-	Reconcile: (self: any) -> (),
-	EndSession: (self: any) -> (),
-	AddUserId: (self: any, user_id: number) -> (),
-	RemoveUserId: (self: any, user_id: number) -> (),
-	MessageHandler: (self: any, fn: (message: {[any]: any}, processed: () -> ()) -> ()) -> (),
-	Save: (self: any) -> (),
-	SetAsync: (self: any) -> (),
+	IsActive: (self: Profile<T>) -> (boolean),
+	Reconcile: (self: Profile<T>) -> (),
+	EndSession: (self: Profile<T>) -> (),
+	AddUserId: (self: Profile<T>, user_id: number) -> (),
+	RemoveUserId: (self: Profile<T>, user_id: number) -> (),
+	MessageHandler: (self: Profile<T>, fn: (message: JSONAcceptable, processed: () -> ()) -> ()) -> (),
+	Save: (self: Profile<T>) -> (),
+	SetAsync: (self: Profile<T>) -> (),
 }
 
 export type VersionQuery<T> = {
-	NextAsync: (self: any) -> (Profile<T>?),
+	NextAsync: (self: VersionQuery<T>) -> (Profile<T>?),
 }
 
 type ProfileStoreStandard<T> = {
 	Name: string,
-	StartSessionAsync: (self: any, profile_key: string, params: {Steal: boolean?}) -> (Profile<T>?),
-	MessageAsync: (self: any, profile_key: string, message: {[any]: any}) -> (boolean),
-	GetAsync: (self: any, profile_key: string, version: string?) -> (Profile<T>?),
-	VersionQuery: (self: any, profile_key: string, sort_direction: Enum.SortDirection?, min_date: DateTime | number | nil, max_date: DateTime | number | nil) -> (VersionQuery<T>),
-	RemoveAsync: (self: any, profile_key: string) -> (boolean),
+	StartSessionAsync: (self: ProfileStoreStandard<T>, profile_key: string, params: {Steal: boolean?}) -> (Profile<T>?),
+	MessageAsync: (self: ProfileStoreStandard<T>, profile_key: string, message: {[any]: any}) -> (boolean),
+	GetAsync: (self: ProfileStoreStandard<T>, profile_key: string, version: string?) -> (Profile<T>?),
+	VersionQuery: (self: ProfileStoreStandard<T>, profile_key: string, sort_direction: Enum.SortDirection?, min_date: DateTime | number | nil, max_date: DateTime | number | nil) -> (VersionQuery<T>),
+	RemoveAsync: (self: ProfileStoreStandard<T>, profile_key: string) -> (boolean),
 }
 
 export type ProfileStore<T> = {
