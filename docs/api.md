@@ -368,7 +368,7 @@ verifying what particular data has been saved, or for securely handling develope
 
 ### .FirstSessionTime
 ``` luau
-Profile.FirstSessionTime   [table] (read-only) -- Unix time
+Profile.FirstSessionTime   [number] (read-only) -- Unix time
 ```
 A [Unix timestamp]((https://en.wikipedia.org/wiki/Unix_time)) of when the profile was created.
 
