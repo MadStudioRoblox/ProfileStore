@@ -1904,10 +1904,6 @@ function ProfileVersionQuery:NextAsync()
 	local is_stacking = VersionQueryNextAsyncStackingFlag == true
 	VersionQueryNextAsyncStackingFlag = false
 
-	if self.profile_store == nil then
-		return nil
-	end
-
 	WaitForStoreReady(self.profile_store)
 
 	if ProfileStore.IsClosing == true then
