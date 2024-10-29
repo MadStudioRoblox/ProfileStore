@@ -967,20 +967,22 @@ end
 
 --]]
 
+export type JSONAcceptable = { JSONAcceptable } | { [string]: JSONAcceptable } | number | string | boolean | buffer
+
 export type Profile<T> = {
-	Data: T & {[any]: any},
-	LastSavedData: T & {[any]: any},
+	Data: T & JSONAcceptable,
+	LastSavedData: T & JSONAcceptable,
 	FirstSessionTime: number,
 	SessionLoadCount: number,
 	Session: {PlaceId: number, JobId: string}?,
-	RobloxMetaData: {[any]: any},
-	UserIds: {[any]: any},
+	RobloxMetaData: JSONAcceptable,
+	UserIds: {number},
 	KeyInfo: DataStoreKeyInfo,
 	OnSave: {Connect: (self: any, listener: () -> ()) -> ({Disconnect: (self: any) -> ()})},
 	OnLastSave: {Connect: (self: any, listener: (reason: "Manual" | "External" | "Shutdown") -> ()) -> ({Disconnect: (self: any) -> ()})},
 	OnSessionEnd: {Connect: (self: any, listener: () -> ()) -> ({Disconnect: (self: any) -> ()})},
-	OnAfterSave: {Connect: (self: any, listener: (last_saved_data: T & {[any]: any}) -> ()) -> ({Disconnect: (self: any) -> ()})},
-	ProfileStore: {[any]: any},
+	OnAfterSave: {Connect: (self: any, listener: (last_saved_data: T & JSONAcceptable) -> ()) -> ({Disconnect: (self: any) -> ()})},
+	ProfileStore: JSONAcceptable,
 	Key: string,
 
 	IsActive: (self: any) -> (boolean),
@@ -988,7 +990,7 @@ export type Profile<T> = {
 	EndSession: (self: any) -> (),
 	AddUserId: (self: any, user_id: number) -> (),
 	RemoveUserId: (self: any, user_id: number) -> (),
-	MessageHandler: (self: any, fn: (message: {[any]: any}, processed: () -> ()) -> ()) -> (),
+	MessageHandler: (self: any, fn: (message: JSONAcceptable, processed: () -> ()) -> ()) -> (),
 	Save: (self: any) -> (),
 	SetAsync: (self: any) -> (),
 }
@@ -1000,7 +1002,7 @@ export type VersionQuery<T> = {
 type ProfileStoreStandard<T> = {
 	Name: string,
 	StartSessionAsync: (self: any, profile_key: string, params: {Steal: boolean?}) -> (Profile<T>?),
-	MessageAsync: (self: any, profile_key: string, message: {[any]: any}) -> (boolean),
+	MessageAsync: (self: any, profile_key: string, message: JSONAcceptable) -> (boolean),
 	GetAsync: (self: any, profile_key: string, version: string?) -> (Profile<T>?),
 	VersionQuery: (self: any, profile_key: string, sort_direction: Enum.SortDirection?, min_date: DateTime | number | nil, max_date: DateTime | number | nil) -> (VersionQuery<T>),
 	RemoveAsync: (self: any, profile_key: string) -> (boolean),
@@ -1021,7 +1023,7 @@ export type ProfileStoreModule = {
 	OnOverwrite: {Connect: (self: any, listener: (store_name: string, profile_key: string) -> ()) -> ({Disconnect: (self: any) -> ()})},
 	OnCriticalToggle: {Connect: (self: any, listener: (is_critical: boolean) -> ()) -> ({Disconnect: (self: any) -> ()})},
 	DataStoreState: "NotReady" | "NoInternet" | "NoAccess" | "Access",
-	New: <T>(store_name: string, template: T?) -> (ProfileStore<T>),
+	New: <T>(store_name: string, template: (T & JSONAcceptable)?) -> (ProfileStore<T>),
 	SetConstant: (name: ConstantName, value: number) -> ()
 }
 
@@ -1856,7 +1858,7 @@ end
 local ProfileVersionQuery = {}
 ProfileVersionQuery.__index = ProfileVersionQuery
 
-function ProfileVersionQuery.New(profile_store, profile_key, sort_direction, min_date, max_date)
+function ProfileVersionQuery.New(profile_store, profile_key, sort_direction, min_date, max_date, is_mock)
 
 	local self = {
 		profile_store = profile_store,
@@ -1871,6 +1873,8 @@ function ProfileVersionQuery.New(profile_store, profile_key, sort_direction, min
 
 		is_query_yielded = false,
 		query_queue = {},
+
+		is_mock = is_mock,
 	}
 	setmetatable(self, ProfileVersionQuery)
 
@@ -1893,6 +1897,7 @@ function MoveVersionQueryQueue(self) -- Hidden ProfileVersionQuery method
 end
 
 local VersionQueryNextAsyncStackingFlag = false
+local WarnAboutVersionQueryOnce = false
 
 function ProfileVersionQuery:NextAsync()
 
@@ -1904,6 +1909,18 @@ function ProfileVersionQuery:NextAsync()
 	end
 
 	WaitForStoreReady(self.profile_store)
+
+	if ProfileStore.IsClosing == true then
+		return nil -- Silently fail :NextAsync() requests
+	end
+
+	if self.is_mock == true or DataStoreState ~= "Access" then
+		if IsStudio == true and WarnAboutVersionQueryOnce == false then
+			WarnAboutVersionQueryOnce = true
+			warn(`[{script.Name}]: :VersionQuery() is not supported in mock mode!`)
+		end
+		return nil -- Silently fail :NextAsync() requests
+	end
 
 	local profile
 	local is_finished = false
@@ -2013,26 +2030,12 @@ function ProfileVersionQuery:NextAsync()
 
 end
 
-local WarnAboutVersionQueryOnce = false
-
 function ProfileStore:VersionQuery(profile_key, sort_direction, min_date, max_date)
 
 	local is_mock = ReadMockFlag()
 
 	if type(profile_key) ~= "string" or string.len(profile_key) == 0 then
 		error(`[{script.Name}]: Invalid profile_key`)
-	end
-
-	if ProfileStore.IsClosing == true then
-		return setmetatable({}, ProfileVersionQuery) -- Silently fail :NextAsync() requests
-	end
-
-	if is_mock or DataStoreState ~= "Access" then
-		if IsStudio == true and WarnAboutVersionQueryOnce == false then
-			WarnAboutVersionQueryOnce = true
-			warn(`[{script.Name}]: :VersionQuery() is not supported in mock mode!`)
-		end
-		return setmetatable({}, ProfileVersionQuery) -- Silently fail :NextAsync() requests
 	end
 
 	-- Type check:
@@ -2053,7 +2056,7 @@ function ProfileStore:VersionQuery(profile_key, sort_direction, min_date, max_da
 	min_date = typeof(min_date) == "DateTime" and min_date.UnixTimestampMillis or min_date
 	max_date = typeof(max_date) == "DateTime" and max_date.UnixTimestampMillis or max_date
 
-	return ProfileVersionQuery.New(self, profile_key, sort_direction, min_date, max_date)
+	return ProfileVersionQuery.New(self, profile_key, sort_direction, min_date, max_date, is_mock)
 
 end
 
