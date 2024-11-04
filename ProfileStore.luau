@@ -332,6 +332,7 @@ local ActiveProfileSaveJobs = 0 -- Number of active threads that are saving prof
 local CriticalStateStart = 0 -- os.clock()
 
 local IsStudio = RunService:IsStudio()
+local IsTeamTest = #game.PrivateServerId > 0 and game.PrivateServerOwnerId == 0
 local DataStoreState: "NotReady" | "NoInternet" | "NoAccess" | "Access" = "NotReady"
 
 local MockStore = {}
@@ -1519,22 +1520,24 @@ function ProfileStore:StartSessionAsync(profile_key, params)
 						-- Use MessagingService to quickly detect session conflicts and resolve them quickly:
 					
 						local last_roblox_message = 0
-						
-						profile.roblox_message_subscription = MessagingService:SubscribeAsync("PS_" .. unique_session_id, function(message)
-							if type(message.Data) == "table" and message.Data.LoadCount == profile.SessionLoadCount then
-								-- High reaction rate, based on numPlayers × 10 DataStore budget as of writing
-								if os.clock() - last_roblox_message > 6 then 
-									last_roblox_message = os.clock()
-									if profile:IsActive() == true then
-										if message.Data.EndSession == true then
-											SaveProfileAsync(profile, true, false, "External")
-										else
-											profile:Save()
+
+						if not IsTeamTest then
+							profile.roblox_message_subscription = MessagingService:SubscribeAsync("PS_" .. unique_session_id, function(message)
+								if type(message.Data) == "table" and message.Data.LoadCount == profile.SessionLoadCount then
+									-- High reaction rate, based on numPlayers × 10 DataStore budget as of writing
+									if os.clock() - last_roblox_message > 6 then 
+										last_roblox_message = os.clock()
+										if profile:IsActive() == true then
+											if message.Data.EndSession == true then
+												SaveProfileAsync(profile, true, false, "External")
+											else
+												profile:Save()
+											end
 										end
 									end
 								end
-							end
-						end)
+							end)
+						end
 						
 					end
 
