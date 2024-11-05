@@ -2,7 +2,7 @@ This is a resource that can help you implement [Developer Products](https://crea
 Roblox game when you're also using ProfileStore.
 
 There are two ways you could handle [Developer Product](https://create.roblox.com/docs/production/monetization/developer-products) purchases -
-one way is based on the [official Roblox documentation on handling developer product purchases], while the other way is based on
+one way is based on the [official Roblox documentation on handling developer product purchases](https://create.roblox.com/docs/production/monetization/developer-products#handling-developer-product-purchases), while the other way is based on
 observations on how [Roblox MarketplaceService API](https://create.roblox.com/docs/reference/engine/classes/MarketplaceService) works.
 
 **In these examples `local Profiles` is a reference to the `Profiles` table in the [Basic Usage example code](/ProfileStore/tutorial/#basic-usage) - you will need to have this code present for the examples below to work!**
