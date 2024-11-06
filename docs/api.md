@@ -4,14 +4,14 @@
 ## Module
 
 ### .IsClosing
-``` luau
+```luau
 ProfileStore.IsClosing   [bool] (read-only)
 ```
 When the Roblox is shutting down this value will be set to `true` and
 most methods will silently fail.
 
 ### .IsCriticalState
-``` luau
+```luau
 ProfileStore.IsCriticalState   [bool] (read-only)
 ```
 After an excessive amount of DataStore calls fail this value will temporarily
@@ -19,35 +19,41 @@ be set to `true` until the DataStore starts operating normally again. Might be
 useful for analytics or notifying players in-game of possible service disturbances.
 
 ### .OnError
-``` luau
+```luau
 ProfileStore.OnError   [Signal] (message, store_name, profile_key)
 ```
-A signal for DataStore error logging. Example:
-``` luau
+A signal for DataStore error logging. 
+
+Example:
+```luau
 ProfileStore.OnError:Connect(function(error_message, store_name, profile_key)
   print(`DataStore error (Store:{store_name};Key:{profile_key}): {error_message}`)
 end)
 ```
 
 ### .OnOverwrite
-``` luau
+```luau
 ProfileStore.OnOverwrite   [Signal] (store_name, profile_key)
 ```
 A signal for events when a DataStore key returns a value that has all or some
 of it's profile components set to invalid data types. E.g., accidentally setting
-`Profile.Data` to a non table value. Example:
-``` luau
+`Profile.Data` to a non table value. 
+
+Example:
+```luau
 ProfileStore.OnOverwrite:Connect(function(store_name, profile_key)
   print(`Overwrite has occurred for Store:{store_name}, Key:{profile_key}`)
 end)
 ```
 
 ### .OnCriticalToggle
-``` luau
+```luau
 ProfileStore.OnCriticalToggle   [Signal] (is_critical)
 ```
-A signal that is called whenever `ProfileStore.IsCriticalState` changes. Example:
-``` luau
+A signal that is called whenever `ProfileStore.IsCriticalState` changes. 
+
+Example:
+```luau
 ProfileStore.OnCriticalToggle:Connect(function(is_critical)
   if is_critical == true then
     print(`ProfileStore entered critical state`)
@@ -58,7 +64,7 @@ end)
 ```
 
 ### .DataStoreState
-``` luau
+```luau
 ProfileStore.DataStoreState   [string] "NotReady" | "NoInternet" | "NoAccess" | "Access"
 ```
 Indicates ProfileStore's access to the DataStore. If at first check `ProfileStore.DataStoreState`
@@ -66,7 +72,7 @@ is `"NotReady"`, it will eventually change to one of the other 3 possible values
 never change again. `"Access"` means ProfileStore can write to the DataStore.
 
 ### .New()
-``` luau
+```luau
 ProfileStore.New(store_name, template?) --> [ProfileStore]
   -- store_name   [string] -- DataStore name
   -- template     nil or [table] -- Profile.Data will default
@@ -80,20 +86,33 @@ in Roblox [DataStoreService](https://create.roblox.com/docs/reference/engine/cla
     Using templates and reconciliation is completely optional and you may alter `Profile.Data` with your own code alone.
 
 ### .SetConstant()
-``` luau
+```luau
 ProfileStore.SetConstant(name, value)
   -- name    [string] "AUTO_SAVE_PERIOD" | "LOAD_REPEAT_PERIOD" | "FIRST_LOAD_REPEAT" | "SESSION_STEAL"
-|   -- "ASSUME_DEAD" | "START_SESSION_TIMEOUT" | "CRITICAL_STATE_ERROR_COUNT" | "CRITICAL_STATE_ERROR_EXPIRE"
-|   -- "CRITICAL_STATE_EXPIRE" | "MAX_MESSAGE_QUEUE"
+  -- | "ASSUME_DEAD" | "START_SESSION_TIMEOUT" | "CRITICAL_STATE_ERROR_COUNT" | "CRITICAL_STATE_ERROR_EXPIRE"
+  -- | "CRITICAL_STATE_EXPIRE" | "MAX_MESSAGE_QUEUE"
   -- value   [number]
 ```
 A feature for experienced developers who understand how ProfileStore works for changing internal constants
 without having to fork the ProfileStore project.
 
+!!! warning 
+    Changing these variables could result in unintended game-breaking functionality. 
+    Unless you're familiar with the Roblox [DataStoreService API Limits](https://create.roblox.com/docs/cloud-services/data-stores/error-codes-and-limits#server-limits) and know what you're doing, you shouldn't change these.
+
+Example:
+```luau
+-- This will change the seconds between auto-saves to 300 (the default)
+ProfileStore.SetConstant("AUTO_SAVE_PERIOD", 300)
+
+-- This will change the maximum number of unprocessed messages saved to a Profile to 1000 (the default)
+ProfileStore.SetConstant("MAX_MESSAGE_QUEUE", 1000)
+```
+
 ## ProfileStore
 
 ### .Mock
-```lua
+```luau
 local PlayerStore = ProfileStore.New("PlayerData", {})
 
 -- This profile would be saved to the DataStore:
@@ -116,7 +135,7 @@ using the same key from `ProfileStore` and `ProfileStore.Mock` will be different
 `ProfileStore.Mock` is useful for customizing your testing environment in cases where you want
 to [enable Roblox API services](https://create.roblox.com/docs/cloud-services/data-stores#enabling-studio-access) in studio,
 but don't want ProfileStore to save to live keys:
-``` luau
+```luau
 local RunService = game:GetService("RunService")
 local PlayerStore = ProfileStore.New("PlayerData", {})
 if RunService:IsStudio() == true then
@@ -128,13 +147,13 @@ end
     Even when Roblox API services are unavailable, `ProfileStore` and `ProfileStore.Mock` will store profiles separately from each other.
 
 ### .Name
-``` luau
+```luau
 ProfileStore.Name   [string] (read-only)
 ```
 The name of the DataStore that was defined as the first argument of `ProfileStore.New()`.
 
 ### :StartSessionAsync()
-``` luau
+```luau
 ProfileStore:StartSessionAsync(profile_key, params?) --> [Profile] or nil
   -- profile_key   [string] -- DataStore key
   -- params        nil or [table]: {
@@ -165,7 +184,7 @@ This argument is only useful for debugging.
 !!! failure "The `Steal` argument bypasses session locks which are needed for item "dupe" prevention - use this only if you know what you are doing"
 
 Example usage:
-``` luau
+```luau
 local Players = game:GetService("Players")
 local profile = PlayerStore:StartSessionAsync(tostring(player.UserId), {
   Cancel = function()
@@ -183,10 +202,10 @@ local profile = PlayerStore:StartSessionAsync(tostring(player.UserId), {
     the player if `:StartSessionAsync()` does not return a `Profile` object.
 
 ### :MessageAsync()
-``` luau
+```luau
 ProfileStore:MessageAsync(profile_key, message) --> is_success [bool]
   -- profile_key   [string] -- DataStore key
-  -- message       [table] -- Data to be stored in the profile before it's received
+  -- message       [table] -- Data to be stored in the profile before it's received and handled
 ```
 Sends a message to a profile regardless of whether a server has started a session for it.
 Each `ProfileStore:MessageAsync()` call will use one [:UpdateAsync()](https://create.roblox.com/docs/reference/engine/classes/GlobalDataStore#UpdateAsync)
@@ -197,8 +216,37 @@ paid items to in-game friends that may or may not be online at the moment**. If 
 of your messages failing to deliver, use [MessagingService](https://create.roblox.com/docs/reference/engine/classes/MessagingService) instead.
 See [`Profile:MessageHandler()`](#messagehandler) to learn how to receive messages.
 
+Example:
+```luau
+-- You can find the second half of this example in the Profile:MessageHandler() section
+local Success = ProfileStore:MessageAsync(profile_key, {
+  
+  -- Updating a players data using a message:
+  Data = {
+    Coins = 5,
+    Gems = -5,
+    DogName = "John Doe"
+  }
+
+  -- You're not limited to just updating a players data!
+  -- You could also, for example, ban a player that's offline (on their next join) or in a different server using a message:
+  Ban = {
+    DisplayReason = "Exploiting",
+    PrivateReason = "Banned by ModeratorNameHere",
+    Duration = 7*60*60*24
+  }
+
+})
+
+if Success then
+  print("Message sent successfully!")
+else
+  warn("Message could not be sent!")
+end
+```
+
 ### :GetAsync()
-``` luau
+```luau
 ProfileStore:GetAsync(profile_key, version?) --> [Profile] or nil
   -- profile_key   [string]
   -- version       nil or [string] -- DataStore key version
@@ -233,7 +281,7 @@ Date definitions are easier with the [DateTime (Official documentation)](https:/
 
 **Case example: "I lost all of my coins on August 14th!"**
 
-```lua
+```luau
 -- Get a ProfileStore object with the same arguments you passed to the
 --  ProfileStore that loads player Profiles:
 
@@ -339,7 +387,7 @@ end
 ```
 
 ### :RemoveAsync()
-``` luau
+```luau
 ProfileStore:RemoveAsync(profile_key) --> is_success [bool]
   -- profile_key   [string] -- DataStore key
 ```
@@ -349,7 +397,7 @@ profiles created through `ProfileStore.Mock` after `Profile:EndSession()` and it
 ## Profile
 
 ### .Data
-``` luau
+```luau
 Profile.Data   [table]
 ```
 This is the data that would resemble player progress or other data you wish to save to the [DataStore](https://create.roblox.com/docs/cloud-services/data-stores).
@@ -360,26 +408,26 @@ to a new table reference (e.g. `Profile.Data = {}`). When `Profile:IsActive()` r
 stored to the DataStore.
 
 ### .LastSavedData
-``` luau
+```luau
 Profile.LastSavedData   [table] (read-only)
 ```
 This is a version of `Profile.Data` that has been successfully stored to the DataStore. Useful for
 verifying what particular data has been saved, or for securely handling developer product purchases.
 
 ### .FirstSessionTime
-``` luau
+```luau
 Profile.FirstSessionTime   [number] (read-only) -- Unix time
 ```
 A [Unix timestamp]((https://en.wikipedia.org/wiki/Unix_time)) of when the profile was created.
 
 ### .SessionLoadCount
-``` luau
+```luau
 Profile.SessionLoadCount   [number] (read-only)
 ```
 Amount of times a session has been started for this profile.
 
 ### .Session
-``` luau
+```luau
 Profile.Session   [table?] (read-only) -- nil or {PlaceId = number, JobId = string}
 ```
 This value never changes after a profile object is created. After you start a session for a profile,
@@ -389,7 +437,7 @@ may be equal to `nil` or a `table` with it's `PlaceId` and `JobId` members set t
 has a session started for the profile.
 
 ### .RobloxMetaData
-``` luau
+```luau
 Profile.RobloxMetaData   [table]
 ```
 !!! failure "Be cautious of very harsh limits for maximum Roblox Metadata size - As of writing this, total table content size cannot exceed 300 characters."
@@ -400,20 +448,20 @@ except changes will truly get saved on the next auto-save cycle or when the prof
 on Roblox metadata limits [can be found here](https://create.roblox.com/docs/cloud-services/data-stores/error-codes-and-limits#metadata-limits).
 
 ### .UserIds
-``` luau
+```luau
 Profile.UserIds [table] (read-only) -- {user_id [number], ...}
 ```
 User ids associated with this profile. Entries must be added with [Profile:AddUserId()](#adduserid) and removed with [Profile:RemoveUserId()](#removeuserid).
 
 ### .KeyInfo
-``` luau
+```luau
 Profile.KeyInfo [DataStoreKeyInfo]
 ```
 The [DataStoreKeyInfo (Official documentation)](https://create.roblox.com/docs/reference/engine/classes/DataStoreKeyInfo)
 instance related to this profile.
 
 ### .OnSave
-``` luau
+```luau
 Profile.OnSave:Connect(function()
   print(`Profile.Data is about to be saved to the DataStore`)
 end)
@@ -425,7 +473,7 @@ are expected to save when done at the moment of `Profile.OnSave` firing, but thi
 after a session has been ended.
 
 ### .OnLastSave
-``` luau
+```luau
 Profile.OnLastSave:Connect(function(reason: "Manual" | "External" | "Shutdown")
   print(`Profile.Data is about to be saved to the DataStore for the last time; Reason: {reason}`)
 end)
@@ -439,8 +487,10 @@ are expected to save when done at the moment of `Profile.OnLastSave` firing, but
 - **`"Shutdown"`** - The profile session has been ended automatically due to the server shutting down
 
 One of `Profile.OnLastSave` uses is giving "logout penalties" where a player may receive punishment for
-closing the game at the wrong time. Example:
-``` luau
+leaving the game at the wrong time. 
+
+Example:
+```luau
 local InCombat = false
 
 Profile.OnLastSave:Connect(function(reason)
@@ -464,7 +514,7 @@ end)
     You should design your data saving code in a way where reacting to `Profile.OnLastSave` is not critical.
 
 ### .OnSessionEnd
-``` luau
+```luau
 Profile.OnSessionEnd:Connect(function()
   print(`Profile session has ended - Profile.Data will no longer be saved to the DataStore`)
 end)
@@ -475,7 +525,7 @@ After the `Profile.OnSessionEnd` signal is fired, no further changes to `Profile
 `Profile.OnSessionEnd` will fire even when a profile session is stolen, whereas `Profile.OnLastSave` would not.
 In some cases it would be preferable to kick the player from the game when this signal is fired:
 
-``` luau
+```luau
 Profile.OnSessionEnd:Connect(function()
   player:Kick(`Your data has been loaded on another server - please rejoin`)
 end)
@@ -486,7 +536,7 @@ end)
     Use `Profile.OnLastSave` instead.
 
 ### .OnAfterSave
-``` luau
+```luau
 Profile.OnAfterSave:Connect(function(last_saved_data)
   print(`Profile.Data has been successfully saved to the DataStore:`, last_saved_data)
 end)
@@ -497,20 +547,20 @@ After this signal is fired, the values [`Profile.LastSavedData`](#lastsaveddata)
 successfully saved to the DataStore.
 
 ### .ProfileStore
-``` luau
+```luau
 Profile.ProfileStore   [ProfileStore] -- ProfileStore object this profile belongs to
 ```
 The [`ProfileStore`](#new) object that was used to create this profile.
 
 ### .Key
-``` luau
+```luau
 Profile.Key   [string] -- DataStore key
 ```
 The DataStore key of this profile. This is the first passed argument to [`ProfileStore:StartSessionAsync()`](#startsessionasync)
 or [`ProfileStore:GetAsync()`](#getasync).
 
 ### :IsActive()
-``` luau
+```luau
 Profile:IsActive() --> [bool]
 ```
 If  `Profile:IsActive()` returns `true`, changes to `Profile.Data` will be saved - this guarantee
@@ -518,7 +568,7 @@ will no longer be valid after yielding (e.g. using `task.wait()` or `:WaitForChi
 you may make changes to two profiles immediately without yielding after `Profile:IsActive()` returns `true` for the two profiles.
 
 ### :Reconcile()
-``` luau
+```luau
 Profile:Reconcile()
 ```
 Fills in missing variables inside `Profile.Data` from a template table that was provided as a second argument
@@ -526,15 +576,15 @@ to [`ProfileStore.New()`](#new). `Profile:Reconcile()` can be useful if you're m
 data template over the course of your game's development.
 
 ### :EndSession()
-``` luau
+```luau
 Profile:EndSession()
 ```
 Stops auto-saving for this profile and saves `Profile.Data` to the DataStore for
 the last time. Call this method after you're done working with the `Profile` object created by [`ProfileStore:StartSessionAsync()`](#startsessionasync).
 
 Example:
-``` luau
-Players.PlayerRemoving:Connect(function(player)
+```luau
+game.Players.PlayerRemoving:Connect(function(player)
     
   local profile = Profiles[player]
 	
@@ -547,22 +597,22 @@ end)
 ```
 
 ### :AddUserId()
-``` luau
+```luau
 Profile:AddUserId(user_id)
--- user_id [number]
+  -- user_id [number]
 ```
 Associates a `UserId` with the profile. Multiple users can be associated with a single profile by calling this method for each individual `UserId`.
 The primary use of this method is to comply with GDPR (The right to erasure). More information in [official documentation](https://create.roblox.com/docs/cloud-services/data-stores#metadata).
 
 ### :RemoveUserId()
-``` luau
+```luau
 Profile:RemoveUserId(user_id)
--- user_id [number]
+  -- user_id [number]
 ```
 Unassociates a `UserId` with the profile.
 
 ### :MessageHandler()
-``` luau
+```luau
 Profile:MessageHandler(function(message, processed)
   print(`Message received:`, message)
   processed()
@@ -576,8 +626,49 @@ other functions passed to `Profile:MessageHandler()` and will broadcast the same
 be broadcasted to new functions passed to `Profile:MessageHandler()` and will continue to do so when a profile session is started
 another time (e.g. after a player joins the game again) until `processed()` is finally called.
 
+Example:
+```lua
+-- You can find the first half of this example in the ProfileStore:MessageAsync() section
+Profile:MessageHandler(function(message, processed)
+
+  -- Handling a message that updates a players data:
+  if message.Data then
+    for key, value in message.Data do
+      if type(value) == "number" then
+        Profile.Data[key] += value
+      elseif type(value) == "string" then
+        Profile.Data[key] = value
+      end
+    end
+  end
+
+  -- Handling a message that bans a player:
+  if message.Ban then
+    local Success, Result = pcall(function()
+      game.Players:BanAsync({
+        UserIds = {player.UserId},
+        DisplayReason = message.Ban.DisplayReason,
+        PrivateReason = message.Ban.PrivateReason,
+        Duration = message.Ban.Duration
+      })
+    end)
+
+    if Success then
+      print("Successfully banned player using a message!")
+    else
+      warn("Could not ban player! Reason:", tostring(result))
+    end
+  end
+
+  -- Once the message has been handled and you've done everything you've needed to, call
+  -- processed() to ensure it doesn't get handled again
+  processed()
+
+end)
+```
+
 ### :Save()
-``` luau
+```luau
 Profile:Save()
 ```
 Calling `Profile:Save()` will immediately save `Profile.Data` to the DataStore when a profile session is still active (`Profile:IsActive()` returns `true`).
@@ -588,7 +679,7 @@ call - see the official documentation on [DataStore limits](https://create.roblo
 evaluate your use case.
 
 ### :SetAsync()
-``` luau
+```luau
 Profile:SetAsync()
 ```
 
