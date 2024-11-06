@@ -187,6 +187,20 @@ local Constants: {[ConstantName]: number} = {
 
 }
 
+local LOG_PREFIX = "[ProfileStore]:"
+
+local function LogInfo(...)
+	print(LOG_PREFIX, ...)
+end
+
+local function LogWarn(...)
+	warn(LOG_PREFIX, ...)
+end
+
+local function LogError(...)
+	error(LOG_PREFIX, ...)
+end
+
 ----- Dependencies -----
 
 -- local Util = require(game.ReplicatedStorage.Shared.Util)
@@ -263,7 +277,7 @@ local Signal do
 	function SignalClass:Connect(listener: (...any) -> ())
 
 		if type(listener) ~= "function" then
-			error(`[{script.Name}]: \"listener\" must be a function; Received {typeof(listener)}`)
+			LogError(`Invalid type for parameter "listener" was provided - expected function, got "{typeof(listener)}"`)
 		end
 
 		local connection = {
@@ -429,13 +443,13 @@ local function ReconcileTable(target, template)
 end
 
 local function RegisterError(error_message, store_name, profile_key) -- Called when a DataStore API call errors
-	warn(`[{script.Name}]: DataStore API error (STORE:{store_name}; KEY:{profile_key}) - {tostring(error_message)}`)
+	LogWarn(`DataStore API error (STORE:{store_name}; KEY:{profile_key}) - {tostring(error_message)}`)
 	table.insert(IssueQueue, os.clock()) -- Adding issue time to queue
 	OnError:Fire(tostring(error_message), store_name, profile_key)
 end
 
 local function RegisterOverwrite(store_name, profile_key) -- Called when a corrupted profile is loaded
-	warn(`[{script.Name}]: Invalid profile was overwritten (STORE:{store_name}; KEY:{profile_key})`)
+	LogWarn(`Invalid profile was overwritten (STORE:{store_name}; KEY:{profile_key})`)
 	OnOverwrite:Fire(store_name, profile_key)
 end
 
@@ -616,7 +630,7 @@ local function UpdateAsync(profile_store, profile_key, transform_params, is_user
 					end)
 
 					if success == false and type(error_message) == "string" and string.find(error_message, "not valid") ~= nil then
-						warn(`[{script.Name}]: Passed version argument is not valid; Traceback:\n` .. debug.traceback())
+						LogWarn(`Passed version argument is not valid; Traceback:\n` .. debug.traceback())
 					end
 
 				else
@@ -716,7 +730,7 @@ end
 local function SaveProfileAsync(profile, is_ending_session, is_overwriting, last_save_reason)
 
 	if type(profile.Data) ~= "table" then
-		error(`[{script.Name}]: Developer code likely set "Profile.Data" to a non-table value! (STORE:{profile.ProfileStore.Name}; KEY:{profile.Key})`)
+		LogError(`Profile.Data was set to invalid type "{typeof(profile.Data)}" - expected table. Aborting save (STORE:{profile.ProfileStore.Name}; KEY:{profile.Key})`)
 	end
 
 	profile.OnSave:Fire()
@@ -1104,7 +1118,7 @@ end
 function Profile:AddUserId(user_id) -- Associates user_id with profile (GDPR compliance)
 
 	if type(user_id) ~= "number" or user_id % 1 ~= 0 then
-		warn(`[{script.Name}]: Invalid UserId argument for :AddUserId() ({tostring(user_id)}); Traceback:\n` .. debug.traceback())
+		LogWarn(`Invalid UserId argument for :AddUserId() ({tostring(user_id)}); Traceback:\n` .. debug.traceback())
 		return
 	end
 
@@ -1121,7 +1135,7 @@ end
 function Profile:RemoveUserId(user_id) -- Unassociates user_id with profile (safe function)
 
 	if type(user_id) ~= "number" or user_id % 1 ~= 0 then
-		warn(`[{script.Name}]: Invalid UserId argument for :RemoveUserId() ({tostring(user_id)}); Traceback:\n` .. debug.traceback())
+		LogWarn(`Invalid UserId argument for :RemoveUserId() ({tostring(user_id)}); Traceback:\n` .. debug.traceback())
 		return
 	end
 
@@ -1136,7 +1150,7 @@ end
 function Profile:SetAsync() -- Saves the profile to the DataStore and removes the session lock
 
 	if self.view_mode ~= true then
-		error(`[{script.Name}]: :SetAsync() can only be used in view mode`)
+		LogError(`:SetAsync() can only be used in view mode`)
 	end
 
 	SaveProfileAsync(self, nil, true)
@@ -1146,7 +1160,7 @@ end
 function Profile:MessageHandler(fn)
 
 	if type(fn) ~= "function" then
-		error(`[{script.Name}]: fn argument is not a function`)
+		LogError(`Invalid type for parameter "fn" was provided - expected function, got "{typeof(fn)}"`)
 	end
 
 	if self.view_mode ~= true and self:IsActive() ~= true then
@@ -1180,11 +1194,11 @@ end
 function Profile:Save()
 	
 	if self.view_mode == true then
-		error(`[{script.Name}]: Can't save profile in view mode; Should you be calling :SetAsync() instead?`)
+		LogError("Can't save profile in view mode - should you be calling :SetAsync() instead?")
 	end
 	
 	if self:IsActive() == false then
-		warn(`[{script.Name}]: Attempted saving an inactive profile (STORE:{self.ProfileStore.Name}; KEY:{self.Key});`
+		LogWarn(`Attempted saving an inactive profile (STORE:{self.ProfileStore.Name}; KEY:{self.Key});`
 			.. ` Traceback:\n` .. debug.traceback())
 		return
 	end
@@ -1213,23 +1227,23 @@ ProfileStore.__index = ProfileStore
 function ProfileStore.SetConstant(name, value)
 
 	if table.isfrozen(Constants) then
-		error("[{script.Name}]: Attempted to set constants after calling ProfileStore.New() - constants must be edited prior to initialization")
+		LogError("Attempted to set constants after calling ProfileStore.New() - constants must be edited prior to initialization")
 	end
 
 	if type(name) ~= "string" then
-		error(`[{script.Name}]: Invalid type for parameter "name" was provided - expected string, got "{typeof(name)}"`)
+		LogError(`Invalid type for parameter "name" was provided - expected string, got "{typeof(name)}"`)
 	end
 
 	if Constants[name] == nil then
-		error(`[{script.Name}]: Invalid constant name "{name}" was provided`)
+		LogError(`Invalid constant "{name}" was provided`)
 	end
 
 	if type(value) ~= "number" then
-		error(`[{script.Name}]: Invalid type for parameter "value" was provided - expected number, got "{typeof(value)}"`)
+		LogError(`Invalid type for parameter "value" was provided - expected number, got "{typeof(value)}"`)
 	end
 
 	if value < 0 then
-		error(`[{script.Name}]: Attempted to set value of constant "{name}" below 0 - value must not be negative`)
+		LogError(`Attempted to set value of constant "{name}" below 0 - value must not be negative`)
 	end
 
 	Constants[name] = value
@@ -1240,7 +1254,7 @@ function ProfileStore.SetConstants(constants)
 	
 	local tmp = typeof(constants)
 	if tmp ~= "table" then
-		error(`[{script.Name}]: Invalid type for parameter "constants" was provided - expected table, got "{tmp}"{tmp == "string" and ". Should you be calling .SetConstant() instead?"}`)
+		LogError(`Invalid type for parameter "constants" was provided - expected table, got "{tmp}"{tmp == "string" and ". Should you be calling .SetConstant() instead?"}`)
 	end
 
 	for k, v in constants do
@@ -1268,15 +1282,15 @@ function ProfileStore.New(store_name, template)
 	Constants = table.freeze(Constants)
 
 	if type(store_name) ~= "string" then
-		error(`[{script.Name}]: Invalid or missing "store_name"`)
+		LogError(`Invalid type for parameter "store_name" was provided - expected string, got "{typeof(store_name)}"`)
 	elseif string.len(store_name) == 0 then
-		error(`[{script.Name}]: store_name cannot be an empty string`)
+		LogError(`Parameter "store_name" is too short - must be at least 1 character`)
 	elseif string.len(store_name) > 50 then
-		error(`[{script.Name}]: store_name is too long`)
+		LogError(`Parameter "store_name" is too long - cannot exceed 50 characters, was {string.len(store_name)}`)
 	end
 
 	if type(template) ~= "table" then
-		error(`[{script.Name}]: Invalid template argument`)
+		LogError(`Invalid type for parameter "template" was provided - expected table, got "{typeof(template)}"`)
 	end
 
 	local self
@@ -1353,19 +1367,19 @@ end
 function ProfileStore:StartSessionAsync(profile_key, params)
 
 	local is_mock = ReadMockFlag()
-
+	
 	if type(profile_key) ~= "string" then
-		error(`[{script.Name}]: profile_key must be a string`)
+		LogError(`Invalid type for parameter "profile_key" was provided - expected string, got "{typeof(profile_key)}"`)
 	elseif string.len(profile_key) == 0 then
-		error(`[{script.Name}]: Invalid profile_key`)
+		LogError(`Parameter "profile_key" is too short - must be at least 1 character`)
 	elseif string.len(profile_key) > 50 then
-		error(`[{script.Name}]: profile_key is too long`)
+		LogError(`Parameter "profile_key" is too long - cannot exceed 50 characters, was {string.len(profile_key)}`)
 	end
-	
+
 	if params ~= nil and type(params) ~= "table" then
-		error(`[{script.Name}]: Invalid params`)
+		LogError(`Invalid type for parameter "params" was provided - expected table, got "{typeof(params)}"`)
 	end
-	
+
 	params = params or {}
 
 	if ProfileStore.IsClosing == true then
@@ -1377,7 +1391,7 @@ function ProfileStore:StartSessionAsync(profile_key, params)
 	local session_token = SessionToken(self.Name, profile_key, is_mock)
 
 	if ActiveSessionCheck[session_token] ~= nil then
-		error(`[{script.Name}]: Profile (STORE:{self.Name}; KEY:{profile_key}) is already loaded in this session`)
+		LogError(`Profile (STORE:{self.Name}; KEY:{profile_key}) is already loaded in this session - are you calling :StartSessionAsync() twice or forgetting to use :EndSession() after a player leaves?`)
 	end
 
 	ActiveProfileLoadJobs = ActiveProfileLoadJobs + 1
@@ -1641,15 +1655,15 @@ function ProfileStore:MessageAsync(profile_key, message)
 	local is_mock = ReadMockFlag()
 
 	if type(profile_key) ~= "string" then
-		error(`[{script.Name}]: profile_key must be a string`)
+		LogError(`Invalid type for parameter "profile_key" was provided - expected string, got "{typeof(profile_key)}"`)
 	elseif string.len(profile_key) == 0 then
-		error(`[{script.Name}]: Invalid profile_key`)
+		LogError(`Parameter "profile_key" is too short - must be at least 1 character`)
 	elseif string.len(profile_key) > 50 then
-		error(`[{script.Name}]: profile_key is too long`)
+		LogError(`Parameter "profile_key" is too long - cannot exceed 50 characters, was {string.len(profile_key)}`)
 	end
 
 	if type(message) ~= "table" then
-		error(`[{script.Name}]: message must be a table`)
+		LogError(`Invalid type for parameter "message" was provided - expected table, got "{typeof(message)}"`)
 	end
 
 	if ProfileStore.IsClosing == true then
@@ -1739,11 +1753,11 @@ function ProfileStore:GetAsync(profile_key, version)
 	local is_mock = ReadMockFlag()
 
 	if type(profile_key) ~= "string" then
-		error(`[{script.Name}]: profile_key must be a string`)
+		LogError(`Invalid type for parameter "profile_key" was provided - expected string, got "{typeof(profile_key)}"`)
 	elseif string.len(profile_key) == 0 then
-		error(`[{script.Name}]: Invalid profile_key`)
+		LogError(`Parameter "profile_key" is too short - must be at least 1 character`)
 	elseif string.len(profile_key) > 50 then
-		error(`[{script.Name}]: profile_key is too long`)
+		LogError(`Parameter "profile_key" is too long - cannot exceed 50 characters, was {string.len(profile_key)}`)
 	end
 
 	if ProfileStore.IsClosing == true then
@@ -1816,8 +1830,12 @@ function ProfileStore:RemoveAsync(profile_key)
 
 	local is_mock = ReadMockFlag()
 
-	if type(profile_key) ~= "string" or string.len(profile_key) == 0 then
-		error(`[{script.Name}]: Invalid profile_key`)
+	if type(profile_key) ~= "string" then
+		LogError(`Invalid type for parameter "profile_key" was provided - expected string, got "{typeof(profile_key)}"`)
+	elseif string.len(profile_key) == 0 then
+		LogError(`Parameter "profile_key" is too short - must be at least 1 character`)
+	elseif string.len(profile_key) > 50 then
+		LogError(`Parameter "profile_key" is too long - cannot exceed 50 characters, was {string.len(profile_key)}`)
 	end
 
 	if ProfileStore.IsClosing == true then
@@ -1930,7 +1948,7 @@ function ProfileVersionQuery:NextAsync()
 	if self.is_mock == true or DataStoreState ~= "Access" then
 		if IsStudio == true and WarnAboutVersionQueryOnce == false then
 			WarnAboutVersionQueryOnce = true
-			warn(`[{script.Name}]: :VersionQuery() is not supported in mock mode!`)
+			LogWarn(`:VersionQuery() is not supported in mock mode!`)
 		end
 		return nil -- Silently fail :NextAsync() requests
 	end
@@ -1968,7 +1986,7 @@ function ProfileVersionQuery:NextAsync()
 			end)
 
 			if list_success == false or self.query_pages == nil then
-				warn(`[{script.Name}]: Version query fail - {tostring(error_message)}`)
+				LogWarn(`Version query fail - {tostring(error_message)}`)
 				self.query_failure = true
 			end
 
@@ -2047,23 +2065,30 @@ function ProfileStore:VersionQuery(profile_key, sort_direction, min_date, max_da
 
 	local is_mock = ReadMockFlag()
 
-	if type(profile_key) ~= "string" or string.len(profile_key) == 0 then
-		error(`[{script.Name}]: Invalid profile_key`)
+	if type(profile_key) ~= "string" then
+		LogError(`Invalid type for parameter "profile_key" was provided - expected string, got "{typeof(profile_key)}"`)
+	elseif string.len(profile_key) == 0 then
+		LogError(`Parameter "profile_key" is too short - must be at least 1 character`)
+	elseif string.len(profile_key) > 50 then
+		LogError(`Parameter "profile_key" is too long - cannot exceed 50 characters, was {string.len(profile_key)}`)
 	end
 
 	-- Type check:
 
-	if sort_direction ~= nil and (typeof(sort_direction) ~= "EnumItem"
-		or sort_direction.EnumType ~= Enum.SortDirection) then
-		error(`[{script.Name}]: Invalid sort_direction ({tostring(sort_direction)})`)
+	if sort_direction ~= nil then
+		if typeof(sort_direction) ~= "EnumItem" then
+			LogError(`Invalid type for parameter "sort_direction" was provided - expected EnumItem, got "{typeof(sort_direction)}"`)
+		elseif typeof(sort_direction) == "EnumItem" and sort_direction.EnumType ~= Enum.SortDirection then
+			LogError(`Invalid EnumType for parameter "sort_direction" was provided - expected Enum.SortDirection, got "{sort_direction.EnumType}"`);
+		end
 	end
 
 	if min_date ~= nil and typeof(min_date) ~= "DateTime" and typeof(min_date) ~= "number" then
-		error(`[{script.Name}]: Invalid min_date ({tostring(min_date)})`)
+		LogError(`Invalid type for parameter "min_date" was provided - expected DateTime or number, got "{typeof(min_date)}"`)
 	end
 
 	if max_date ~= nil and typeof(max_date) ~= "DateTime" and typeof(max_date) ~= "number" then
-		error(`[{script.Name}]: Invalid max_date ({tostring(max_date)})`)
+		LogError(`Invalid type for parameter "max_date" was provided - expected DateTime or number, got "{typeof(max_date)}"`)
 	end
 
 	min_date = typeof(min_date) == "DateTime" and min_date.UnixTimestampMillis or min_date
@@ -2089,7 +2114,7 @@ if IsStudio == true then
 		local no_internet_access = status == false and string.find(message, "ConnectFail", 1, true) ~= nil
 
 		if no_internet_access == true then
-			warn(`[{script.Name}]: No internet access - check your network connection`)
+			LogWarn(`No internet access - check your network connection`)
 		end
 
 		if status == false and
@@ -2098,10 +2123,10 @@ if IsStudio == true then
 				no_internet_access == true) then -- No internet access
 
 			new_state = if no_internet_access == true then "NoInternet" else "NoAccess"
-			print(`[{script.Name}]: Roblox API services unavailable - data will not be saved`)
+			LogInfo(`Roblox API services unavailable - data will not be saved`)
 		else
 			new_state = "Access"
-			print(`[{script.Name}]: Roblox API services available - data will be saved`)
+			LogInfo(`Roblox API services available - data will be saved`)
 		end
 
 		DataStoreState = new_state
@@ -2165,7 +2190,7 @@ RunService.Heartbeat:Connect(function()
 			ProfileStore.IsCriticalState = true
 			ProfileStore.OnCriticalToggle:Fire(true)
 			CriticalStateStart = os.clock()
-			warn(`[{script.Name}]: Entered critical state`)
+			LogWarn(`Entered critical state`)
 		end
 	else
 		if #IssueQueue >= Constants.CRITICAL_STATE_ERROR_COUNT then
@@ -2173,7 +2198,7 @@ RunService.Heartbeat:Connect(function()
 		elseif os.clock() - CriticalStateStart > Constants.CRITICAL_STATE_EXPIRE then
 			ProfileStore.IsCriticalState = false
 			ProfileStore.OnCriticalToggle:Fire(false)
-			warn(`[{script.Name}]: Critical state ended`)
+			LogWarn(`Critical state ended`)
 		end
 	end
 
