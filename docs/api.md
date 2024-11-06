@@ -112,6 +112,23 @@ ProfileStore.SetConstant("AUTO_SAVE_PERIOD", 300)
 ProfileStore.SetConstant("MAX_MESSAGE_QUEUE", 1000)
 ```
 
+### .SetConstants()
+```luau
+ProfileStore.SetConstants(constants)
+  -- constants  [table]: {name [string] = value [number]}
+```
+This fulfills the same purpose as `ProfileStore.SetConstant()`, but instead takes a table of multiple constants
+and corresponding values to set them to all in one method call rather than needing to use multiple. This does
+not have a performance advantage and is just preferential.
+
+Example:
+```luau
+ProfileStore.SetConstants({
+  AUTO_SAVE_PERIOD = 300,
+  MAX_MESSAGE_QUEUE = 1000
+})
+```
+
 ## ProfileStore
 
 ### .Mock

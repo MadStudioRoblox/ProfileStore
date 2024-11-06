@@ -46,6 +46,9 @@ MAD STUDIO (by loleris)
 		ProfileStore.SetConstant(name, value)
 			name    [string]
 			value   [number]
+
+		ProfileStore.SetConstants(constants)
+			constants    [table]: {name [string] = value [number]} -- Table of constants with corresponding values; e.g. {AUTO_SAVE_PERIOD = 500}
 				
 	Members [ProfileStore]:
 	
@@ -1028,7 +1031,8 @@ export type ProfileStoreModule = {
 	OnCriticalToggle: {Connect: (self: any, listener: (is_critical: boolean) -> ()) -> ({Disconnect: (self: any) -> ()})},
 	DataStoreState: "NotReady" | "NoInternet" | "NoAccess" | "Access",
 	New: <T>(store_name: string, template: (T & JSONAcceptable)?) -> (ProfileStore<T>),
-	SetConstant: (name: ConstantName, value: number) -> ()
+	SetConstant: (name: ConstantName, value: number) -> (),
+	SetConstants: ({[ConstantName]: number}) -> ()
 }
 
 local Profile = {}
@@ -1230,6 +1234,19 @@ function ProfileStore.SetConstant(name, value)
 
 	Constants[name] = value
 
+end
+
+function ProfileStore.SetConstants(constants)
+	
+	local tmp = typeof(constants)
+	if tmp ~= "table" then
+		error(`[{script.Name}]: Invalid type for parameter "constants" was provided - expected table, got "{tmp}"{tmp == "string" and ". Should you be calling .SetConstant() instead?"}`)
+	end
+
+	for k, v in constants do
+		ProfileStore.SetConstant(k, v)
+	end
+	
 end
 
 function ProfileStore.Test()
