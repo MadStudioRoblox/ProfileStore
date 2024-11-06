@@ -100,6 +100,9 @@ without having to fork the ProfileStore project.
     Changing these variables could result in unintended game-breaking functionality. 
     Unless you're familiar with the Roblox [DataStoreService API Limits](https://create.roblox.com/docs/cloud-services/data-stores/error-codes-and-limits#server-limits) and know what you're doing, you shouldn't change these.
 
+!!! notice
+    Constants cannot be edited after calling `ProfileStore.New()`. Doing so will result in an error.
+
 Example:
 ```luau
 -- This will change the seconds between auto-saves to 300 (the default)
