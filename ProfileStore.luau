@@ -167,18 +167,22 @@ MAD STUDIO (by loleris)
 		
 --]]
 
-local AUTO_SAVE_PERIOD = 300 -- (Seconds) Time between when changes to a profile are saved to the DataStore
-local LOAD_REPEAT_PERIOD = 10 -- (Seconds) Time between successive profile reads when handling a session conflict
-local FIRST_LOAD_REPEAT = 5 -- (Seconds) Time between first and second profile read when handling a session conflict
-local SESSION_STEAL = 40 -- (Seconds) Time until a session conflict is resolved with the waiting server stealing the session
-local ASSUME_DEAD = 630 -- (Seconds) If a profile hasn't had updates for this long, quickly assume an active session belongs to a crashed server
-local START_SESSION_TIMEOUT = 120 -- (Seconds) If a session can't be started for a profile for this long, stop repeating calls to the DataStore
+local Constants: {[ConstantName]: number} = {
 
-local CRITICAL_STATE_ERROR_COUNT = 5 -- Assume critical state if this many issues happen in a short amount of time
-local CRITICAL_STATE_ERROR_EXPIRE = 120 -- (Seconds) Individual issue expiration
-local CRITICAL_STATE_EXPIRE = 120 -- (Seconds) Critical state expiration
+	AUTO_SAVE_PERIOD = 300, -- (Seconds) Time between when changes to a profile are saved to the DataStore
+	LOAD_REPEAT_PERIOD = 10, -- (Seconds) Time between successive profile reads when handling a session conflict
+	FIRST_LOAD_REPEAT = 5, -- (Seconds) Time between first and second profile read when handling a session conflict
+	SESSION_STEAL = 40, -- (Seconds) Time until a session conflict is resolved with the waiting server stealing the session
+	ASSUME_DEAD = 630, -- (Seconds) If a profile hasn't had updates for this long, quickly assume an active session belongs to a crashed server
+	START_SESSION_TIMEOUT = 120, -- (Seconds) If a session can't be started for a profile for this long, stop repeating calls to the DataStore
 
-local MAX_MESSAGE_QUEUE = 1000 -- Max messages saved in a profile that were sent using "ProfileStore:MessageAsync()"
+	CRITICAL_STATE_ERROR_COUNT = 5, -- Assume critical state if this many issues happen in a short amount of time
+	CRITICAL_STATE_ERROR_EXPIRE = 120, -- (Seconds) Individual issue expiration
+	CRITICAL_STATE_EXPIRE = 120, -- (Seconds) Critical state expiration
+
+	MAX_MESSAGE_QUEUE = 1000 -- Max messages saved in a profile that were sent using "ProfileStore:MessageAsync()"
+
+}
 
 ----- Dependencies -----
 
@@ -1204,33 +1208,27 @@ ProfileStore.__index = ProfileStore
 
 function ProfileStore.SetConstant(name, value)
 
-	if type(value) ~= "number" then
-		error(`[{script.Name}]: Invalid value type`)
+	if table.isfrozen(Constants) then
+		error("[{script.Name}]: Attempted to set constants after calling ProfileStore.New() - constants must be edited prior to initialization")
 	end
 
-	if name == "AUTO_SAVE_PERIOD" then
-		AUTO_SAVE_PERIOD = value
-	elseif name == "LOAD_REPEAT_PERIOD" then
-		LOAD_REPEAT_PERIOD = value
-	elseif name == "FIRST_LOAD_REPEAT" then
-		FIRST_LOAD_REPEAT = value
-	elseif name == "SESSION_STEAL" then
-		SESSION_STEAL = value
-	elseif name == "ASSUME_DEAD" then
-		ASSUME_DEAD = value
-	elseif name == "START_SESSION_TIMEOUT" then
-		START_SESSION_TIMEOUT = value
-	elseif name == "CRITICAL_STATE_ERROR_COUNT" then
-		CRITICAL_STATE_ERROR_COUNT = value
-	elseif name == "CRITICAL_STATE_ERROR_EXPIRE" then
-		CRITICAL_STATE_ERROR_EXPIRE = value
-	elseif name == "CRITICAL_STATE_EXPIRE" then
-		CRITICAL_STATE_EXPIRE = value
-	elseif name == "MAX_MESSAGE_QUEUE" then
-		MAX_MESSAGE_QUEUE = value
-	else
-		error(`[{script.Name}]: Invalid constant name was provided`)
+	if type(name) ~= "string" then
+		error(`[{script.Name}]: Invalid type for parameter "name" was provided - expected string, got "{typeof(name)}"`)
 	end
+
+	if Constants[name] == nil then
+		error(`[{script.Name}]: Invalid constant name "{name}" was provided`)
+	end
+
+	if type(value) ~= "number" then
+		error(`[{script.Name}]: Invalid type for parameter "value" was provided - expected number, got "{typeof(value)}"`)
+	end
+
+	if value < 0 then
+		error(`[{script.Name}]: Attempted to set value of constant "{name}" below 0 - value must not be negative`)
+	end
+
+	Constants[name] = value
 
 end
 
@@ -1249,6 +1247,8 @@ end
 function ProfileStore.New(store_name, template)
 
 	template = template or {}
+
+	Constants = table.freeze(Constants)
 
 	if type(store_name) ~= "string" then
 		error(`[{script.Name}]: Invalid or missing "store_name"`)
@@ -1441,7 +1441,7 @@ function ProfileStore:StartSessionAsync(profile_key, params)
 							if IsThisSession(active_session) == false then
 								local last_update = latest_data.MetaData.LastUpdate
 								if last_update ~= nil then
-									if os.time() - last_update > ASSUME_DEAD then
+									if os.time() - last_update > Constants.ASSUME_DEAD then
 										latest_data.MetaData.ActiveSession = {PlaceId, JobId, unique_session_id}
 										latest_data.MetaData.ForceLoadSession = nil
 										return
@@ -1563,7 +1563,7 @@ function ProfileStore:StartSessionAsync(profile_key, params)
 
 						if request_force_load == false then
 							force_load_steps = force_load_steps + 1
-							if force_load_steps >= math.ceil(SESSION_STEAL / LOAD_REPEAT_PERIOD) then
+							if force_load_steps >= math.ceil(Constants.SESSION_STEAL / Constants.LOAD_REPEAT_PERIOD) then
 								steal_session = true
 							end
 						end
@@ -1575,7 +1575,7 @@ function ProfileStore:StartSessionAsync(profile_key, params)
 						end
 						
 						-- Attempt to load the profile again after a delay
-						local wait_until = os.clock() + if request_force_load == true then FIRST_LOAD_REPEAT else LOAD_REPEAT_PERIOD
+						local wait_until = os.clock() + if request_force_load == true then Constants.FIRST_LOAD_REPEAT else Constants.LOAD_REPEAT_PERIOD
 						repeat task.wait() until os.clock() >= wait_until or ProfileStore.IsClosing == true
 
 					else
@@ -1599,7 +1599,7 @@ function ProfileStore:StartSessionAsync(profile_key, params)
 			local default_timeout = false
 
 			if params.Cancel == nil then
-				default_timeout = os.clock() - start >= START_SESSION_TIMEOUT
+				default_timeout = os.clock() - start >= Constants.START_SESSION_TIMEOUT
 			end
 			
 			if default_timeout == true or ProfileStore.IsClosing == true or cancel_condition() == true then
@@ -1669,7 +1669,7 @@ function ProfileStore:MessageAsync(profile_key, message)
 
 					-- Clearing queue if above limit:
 
-					while #update_list > MAX_MESSAGE_QUEUE do
+					while #update_list > Constants.MAX_MESSAGE_QUEUE do
 						table.remove(update_list, 1)
 					end
 
@@ -2107,12 +2107,12 @@ RunService.Heartbeat:Connect(function()
 
 	local auto_save_list_length = #AutoSaveList
 	if auto_save_list_length > 0 then
-		local auto_save_index_speed = AUTO_SAVE_PERIOD / auto_save_list_length
+		local auto_save_index_speed = Constants.AUTO_SAVE_PERIOD / auto_save_list_length
 		local os_clock = os.clock()
 		while os_clock - LastAutoSave > auto_save_index_speed do
 			LastAutoSave = LastAutoSave + auto_save_index_speed
 			local profile = AutoSaveList[AutoSaveIndex]
-			if os_clock - profile.load_timestamp < AUTO_SAVE_PERIOD / 2 then
+			if os_clock - profile.load_timestamp < Constants.AUTO_SAVE_PERIOD / 2 then
 				-- This profile is freshly loaded - auto saving immediately is not necessary:
 				profile = nil
 				for _ = 1, auto_save_list_length - 1 do
@@ -2122,7 +2122,7 @@ RunService.Heartbeat:Connect(function()
 						AutoSaveIndex = 1
 					end
 					profile = AutoSaveList[AutoSaveIndex]
-					if os_clock - profile.load_timestamp >= AUTO_SAVE_PERIOD / 2 then
+					if os_clock - profile.load_timestamp >= Constants.AUTO_SAVE_PERIOD / 2 then
 						break
 					else
 						profile = nil
@@ -2144,16 +2144,16 @@ RunService.Heartbeat:Connect(function()
 	-- Critical state handling:
 
 	if ProfileStore.IsCriticalState == false then
-		if #IssueQueue >= CRITICAL_STATE_ERROR_COUNT then
+		if #IssueQueue >= Constants.CRITICAL_STATE_ERROR_COUNT then
 			ProfileStore.IsCriticalState = true
 			ProfileStore.OnCriticalToggle:Fire(true)
 			CriticalStateStart = os.clock()
 			warn(`[{script.Name}]: Entered critical state`)
 		end
 	else
-		if #IssueQueue >= CRITICAL_STATE_ERROR_COUNT then
+		if #IssueQueue >= Constants.CRITICAL_STATE_ERROR_COUNT then
 			CriticalStateStart = os.clock()
-		elseif os.clock() - CriticalStateStart > CRITICAL_STATE_EXPIRE then
+		elseif os.clock() - CriticalStateStart > Constants.CRITICAL_STATE_EXPIRE then
 			ProfileStore.IsCriticalState = false
 			ProfileStore.OnCriticalToggle:Fire(false)
 			warn(`[{script.Name}]: Critical state ended`)
@@ -2166,7 +2166,7 @@ RunService.Heartbeat:Connect(function()
 		local issue_time = IssueQueue[1]
 		if issue_time == nil then
 			break
-		elseif os.clock() - issue_time > CRITICAL_STATE_ERROR_EXPIRE then
+		elseif os.clock() - issue_time > Constants.CRITICAL_STATE_ERROR_EXPIRE then
 			table.remove(IssueQueue, 1)
 		else
 			break
