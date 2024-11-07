@@ -234,26 +234,18 @@ call on the server that currently has a session started for the profile - This m
 that `ProfileStore:MessageAsync()` is only to be used for when handling critical data like **gifting
 paid items to in-game friends that may or may not be online at the moment**. If you don't mind the possibility
 of your messages failing to deliver, use [MessagingService](https://create.roblox.com/docs/reference/engine/classes/MessagingService) instead.
-See [`Profile:MessageHandler()`](#messagehandler) to learn how to receive messages.
+See [`Profile:MessageHandler()`](#messagehandler) to learn how to receive and handle messages.
 
 Example:
 ```luau
--- You can find the second half of this example in the Profile:MessageHandler() section
+-- Updating a players data using a message
+-- You can find the second half of this example that receives and handles the message in the Profile:MessageHandler() section
 local Success = ProfileStore:MessageAsync(profile_key, {
   
-  -- Updating a players data using a message:
   Data = {
     Coins = 5,
     Gems = -5,
     DogName = "John Doe"
-  }
-
-  -- You're not limited to just updating a players data!
-  -- You could also, for example, ban a player that's offline (on their next join) or in a different server using a message:
-  Ban = {
-    DisplayReason = "Exploiting",
-    PrivateReason = "Banned by ModeratorNameHere",
-    Duration = 7*60*60*24
   }
 
 })
@@ -278,7 +270,8 @@ If there's no data saved in the DataStore under a provided `profile_key`, `Profi
 
 `:GetAsync()` is the the preferred way of reading player data without editing it.
 
-!!! warning "`Profile.Data` will not be auto-saved when using `ProfileStore:GetAsync()`"
+!!! warning 
+    "`Profile.Data` will not be auto-saved when using `ProfileStore:GetAsync()`"
 
 ### :VersionQuery()
 ```luau
@@ -644,48 +637,30 @@ The `processed` argument is a function that must be called to let ProfileStore k
 been processed. If a message is not processed by calling `processed()`, ProfileStore will continue to iterate through
 other functions passed to `Profile:MessageHandler()` and will broadcast the same `message`. Unprocessed messages will
 be broadcasted to new functions passed to `Profile:MessageHandler()` and will continue to do so when a profile session is started
-another time (e.g. after a player joins the game again) until `processed()` is finally called.
+another time (e.g. after a player rejoins) until `processed()` is finally called.
 
 Example:
 ```luau
--- You can find the first half of this example in the ProfileStore:MessageAsync() section
+-- Receiving and handling a message that updates a players data
+-- You can find the first half of this example that sends the message in the ProfileStore:MessageAsync() section
 Profile:MessageHandler(function(message, processed)
-
-  -- Handling a message that updates a players data:
+  
   if message.Data then
     for key, value in message.Data do
-      if type(value) == "number" then
+      if type(value) == "number" and type(Profile.Data[key]) == "number" then
         Profile.Data[key] += value
-      elseif type(value) == "string" then
+      elseif type(value) == "string" and type(Profile.Data[key]) == "string" then
         Profile.Data[key] = value
-      end
     end
+      -- Once the players data has been successfully updated, call processed() to ensure the message doesn't get handled again
+      processed()
   end
-
-  -- Handling a message that bans a player:
-  if message.Ban then
-    local Success, Result = pcall(function()
-      game.Players:BanAsync({
-        UserIds = {player.UserId},
-        DisplayReason = message.Ban.DisplayReason,
-        PrivateReason = message.Ban.PrivateReason,
-        Duration = message.Ban.Duration
-      })
-    end)
-
-    if Success then
-      print("Successfully banned player using a message!")
-    else
-      warn("Could not ban player! Reason:", tostring(result))
-    end
-  end
-
-  -- Once the message has been handled and you've done everything you've needed to, call
-  -- processed() to ensure it doesn't get handled again
-  processed()
 
 end)
 ```
+
+!!! warning
+    You should not register more than one `Profile:MessageHandler()` function. Doing so may result in the same message being handled multiple times.
 
 ### :Save()
 ```luau
@@ -703,7 +678,8 @@ evaluate your use case.
 Profile:SetAsync()
 ```
 
-!!! warning "Only works for profiles loaded through [ProfileStore:GetAsync()](#getasync) or [ProfileStore:VersionQuery()](#versionquery)"
+!!! warning 
+    "Only works for profiles loaded through [ProfileStore:GetAsync()](#getasync) or [ProfileStore:VersionQuery()](#versionquery)"
 
 Saves `Profile.Data` of a profile loaded with [ProfileStore:GetAsync()](#getasync) to the DataStore disregarding any active sessions.
 If there was a server that had an active session for that profile - that session will be ended.
