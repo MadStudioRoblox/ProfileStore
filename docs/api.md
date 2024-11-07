@@ -281,7 +281,7 @@ If there's no data saved in the DataStore under a provided `profile_key`, `Profi
 !!! warning "`Profile.Data` will not be auto-saved when using `ProfileStore:GetAsync()`"
 
 ### :VersionQuery()
-```lua
+```luau
 ProfileStore:VersionQuery(profile_key, sort_direction?, min_date?, max_date?) --> [VersionQuery]
   -- profile_key      [string]
   -- sort_direction   nil or [Enum.SortDirection] -- Defaults to "Ascending"
@@ -345,7 +345,7 @@ end
 
 **Case example: Studying data mutation over time**
 
-```lua
+```luau
 -- You have ProfileStore working in your game. You join
 --  the game with your own account and go to https://www.unixtimestamp.com
 --  and save the current UNIX timestamp resembling present time.
@@ -647,7 +647,7 @@ be broadcasted to new functions passed to `Profile:MessageHandler()` and will co
 another time (e.g. after a player joins the game again) until `processed()` is finally called.
 
 Example:
-```lua
+```luau
 -- You can find the first half of this example in the ProfileStore:MessageAsync() section
 Profile:MessageHandler(function(message, processed)
 
