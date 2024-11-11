@@ -3,16 +3,16 @@
 ProfileStore is supposed to be a ModuleScript which you should place inside your Roblox game's *ServerScriptService* or wherever else is preferred.
 Since DataStores are server-side only, ProfileStore is also a module that should only run on the server-side.
 
-### Option #1: Get ProfileService from the Roblox library
+### Option #1: Get ProfileStore from the Roblox library
 
    - Get the library model [(click here)](https://create.roblox.com/store/asset/109379033046155/ProfileStore)
    - Make sure the "ProfileStore" ModuleScript is under `ServerScriptService`:
 
 ![Open toolbox menu](../images/Step1.jpg)
 
-![Find the ProfileService model](../images/Step2.jpg)
+![Find the ProfileStore model](../images/Step2.jpg)
 
-![Move ProfileService to ServerScriptService](../images/Step3.jpg)
+![Move ProfileStore to ServerScriptService](../images/Step3.jpg)
 
 ### Option #2: Github
 * [ProfileStore repository](https://github.com/MadStudioRoblox/ProfileStore)
