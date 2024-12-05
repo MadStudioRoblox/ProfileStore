@@ -2059,6 +2059,10 @@ end
 -- DataStore API access check:
 
 if IsStudio == true then
+	local errorCodes = {
+		StudioAccessToApisNotAllowed = 403, -- Cannot write to DataStore from studio if API access is not enabled
+		OperationNotAllowed = 509, -- DSS operations are blocked on personal RCC (non-live channel)
+	}
 
 	task.spawn(function()
 
@@ -2075,8 +2079,18 @@ if IsStudio == true then
 			warn(`[{script.Name}]: No internet access - check your network connection`)
 		end
 
+		local badErrorCode = false
+		if status == false then
+			for _, errorCode in errorCodes do
+				if string.find(message, tostring(errorCode), 1, true) ~= nil then
+					badErrorCode = true
+					break
+				end
+			end
+		end
+
 		if status == false and
-			(string.find(message, "403", 1, true) ~= nil or -- Cannot write to DataStore from studio if API access is not enabled
+			(badErrorCode or
 				string.find(message, "must publish", 1, true) ~= nil or -- Game must be published to access live keys
 				no_internet_access == true) then -- No internet access
 
