@@ -21,7 +21,7 @@ Since DataStores are server-side only, ProfileStore is also a module that should
 
 To start using ProfileStore, you need a piece of code that starts a profile session when a player joins. When a profile session is started,
 changes to the `Profile.Data` table will be auto-saved periodically and saved for the last time after `Profile:EndSession()` is called.
-You can find explanations for every method and property of `ProfileStore` and `Profile` objects in the [ProfileStore API](#/ProfileStore/api).
+You can find explanations for every method and property of `ProfileStore` and `Profile` objects in the [ProfileStore API](../api).
 
 This code is a standard implementation of ProfileStore:
 
