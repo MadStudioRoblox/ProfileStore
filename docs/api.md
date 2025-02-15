@@ -114,7 +114,7 @@ on profiles stored on a separate "fake" DataStore that will be forgotten when th
 using the same key from `ProfileStore` and `ProfileStore.Mock` will be different profiles because the regular and mock versions of a `ProfileStore` are isolated from each other.
 
 `ProfileStore.Mock` is useful for customizing your testing environment in cases where you want
-to [enable Roblox API services](https://create.roblox.com/docs/cloud-services/data-stores#enabling-studio-access) in studio,
+to [enable Roblox API services](https://create.roblox.com/docs/cloud-services/data-stores#enable-studio-access) in studio,
 but don't want ProfileStore to save to live keys:
 ``` luau
 local RunService = game:GetService("RunService")
@@ -175,7 +175,7 @@ local profile = PlayerStore:StartSessionAsync(tostring(player.UserId), {
 ```
 
 !!! notice
-    ProfileStore saves profiles to live DataStore keys in Roblox Studio when [Roblox API services are enabled](https://create.roblox.com/docs/cloud-services/data-stores#enabling-studio-access). See [ProfileStore.Mock](#mock) if saving to live keys during testing is not desired.
+    ProfileStore saves profiles to live DataStore keys in Roblox Studio when [Roblox API services are enabled](https://create.roblox.com/docs/cloud-services/data-stores#enable-studio-access). See [ProfileStore.Mock](#mock) if saving to live keys during testing is not desired.
 
 !!! warning
     `:StartSessionAsync()` can return `nil` when another remote Roblox server attempts to start a session for the same profile at the same time.
@@ -370,7 +370,7 @@ verifying what particular data has been saved, or for securely handling develope
 ``` luau
 Profile.FirstSessionTime   [number] (read-only) -- Unix time
 ```
-A [Unix timestamp]((https://en.wikipedia.org/wiki/Unix_time)) of when the profile was created.
+A [Unix timestamp](https://en.wikipedia.org/wiki/Unix_time) of when the profile was created.
 
 ### .SessionLoadCount
 ``` luau
