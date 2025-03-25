@@ -2,9 +2,9 @@
 
 ## Problems in Roblox studio testing
 
-By default, data saved with ProfileStore on Roblox Studio will not persist. This can be changed by [enabling studio access to API services](https://create.roblox.com/docs/cloud-services/data-stores#enabling-studio-access).
+By default, data saved with ProfileStore on Roblox Studio will not persist. This can be changed by [enabling studio access to API services](https://create.roblox.com/docs/cloud-services/data-stores#enable-studio-access).
 
-!!! warning "When studio access to API services is enabled, ProfileStore will write to live DataStore keys of the game you're editing (unless [ProfileStore.Mock](/ProfileStore/api/#mock) is used) and you might accidentally make unwanted changes to your game's saved data. For more info, check the [official documentation](https://create.roblox.com/docs/cloud-services/data-stores#enabling-studio-access)."
+!!! warning "When studio access to API services is enabled, ProfileStore will write to live DataStore keys of the game you're editing (unless [ProfileStore.Mock](/ProfileStore/api/#mock) is used) and you might accidentally make unwanted changes to your game's saved data. For more info, check the [official documentation](https://create.roblox.com/docs/cloud-services/data-stores#enable-studio-access)."
 
 ## Saving data which Roblox cannot serialize
 

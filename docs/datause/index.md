@@ -1,7 +1,7 @@
 ProfileStore uses Roblox [DataStores](https://create.roblox.com/docs/cloud-services/data-stores) to store profile data.
 Roblox game servers have a limit on how many DataStore API requests can be made in a certain amount of time.
 You can find official information on [Roblox DataStore limits by clicking here](https://create.roblox.com/docs/cloud-services/data-stores/error-codes-and-limits#server-limits).
-ProfileStore also uses Roblox [MessagingService](https://create.roblox.com/docs/reference/engine/classes/MessagingService#summary) to resolve session conflicts between multiple servers faster - Find information on [Roblox MessagingService limits by clicking here](https://create.roblox.com/docs/reference/engine/classes/MessagingService#summary).
+ProfileStore also uses Roblox [MessagingService](https://create.roblox.com/docs/reference/engine/classes/MessagingService) to resolve session conflicts between multiple servers faster - Find information on [Roblox MessagingService limits by clicking here](https://create.roblox.com/docs/reference/engine/classes/MessagingService).
 
 *(During DataStore outages after a DataStore request results in an error ProfileStore may repeat requests faster or slower [using exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff))*
 
