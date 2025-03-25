@@ -148,7 +148,7 @@ MAD STUDIO (by loleris)
 		Profile:AddUserId(user_id) -- Associates user_id with profile (GDPR compliance)
 			user_id   [number]
 
-		Profile:RemoveUserId(user_id) -- Unassociates user_id with profile (safe function)
+		Profile:RemoveUserId(user_id) -- Removes user_id association with profile (safe function)
 			user_id   [number]
 			
 		Profile:MessageHandler(fn) -- Sets a message handler for this profile
@@ -508,7 +508,7 @@ local function UpdateAsync(profile_store, profile_key, transform_params, is_user
 	--transform_params = {
 	--	ExistingProfileHandle = function(latest_data),
 	--	MissingProfileHandle = function(latest_data),
-	--	EditProfile = function(lastest_data),
+	--	EditProfile = function(latest_data),
 	--}
 
 	local loaded_data, key_info
@@ -1110,7 +1110,7 @@ function Profile:AddUserId(user_id) -- Associates user_id with profile (GDPR com
 
 end
 
-function Profile:RemoveUserId(user_id) -- Unassociates user_id with profile (safe function)
+function Profile:RemoveUserId(user_id) -- Removes user_id association with profile (safe function)
 
 	if type(user_id) ~= "number" or user_id % 1 ~= 0 then
 		warn(`[{script.Name}]: Invalid UserId argument for :RemoveUserId() ({tostring(user_id)}); Traceback:\n` .. debug.traceback())
@@ -1333,6 +1333,34 @@ function ProfileStore.New(store_name, template)
 
 end
 
+local function RobloxMessageSubscription(profile, unique_session_id)
+
+	local last_roblox_message = 0
+	
+	local roblox_message_subscription = MessagingService:SubscribeAsync("PS_" .. unique_session_id, function(message)
+		if type(message.Data) == "table" and message.Data.LoadCount == profile.SessionLoadCount then
+			-- High reaction rate, based on numPlayers × 10 DataStore budget as of writing
+			if os.clock() - last_roblox_message > 6 then 
+				last_roblox_message = os.clock()
+				if profile:IsActive() == true then
+					if message.Data.EndSession == true then
+						SaveProfileAsync(profile, true, false, "External")
+					else
+						profile:Save()
+					end
+				end
+			end
+		end
+	end)
+
+	if profile:IsActive() == true then
+		profile.roblox_message_subscription = roblox_message_subscription
+	else
+		roblox_message_subscription:Disconnect()
+	end
+
+end
+
 function ProfileStore:StartSessionAsync(profile_key, params)
 
 	local is_mock = ReadMockFlag()
@@ -1392,7 +1420,7 @@ function ProfileStore:StartSessionAsync(profile_key, params)
 
 		-- SPECIAL CASE - If StartSessionAsync is called for the same key again before another StartSessionAsync finishes,
 		-- grab the DataStore return for the new call. The early call will return nil. This is supposed to retain
-		-- expected and efficient behaviour in cases where a player would quickly rejoin the same server.
+		-- expected and efficient behavior in cases where a player would quickly rejoin the same server.
 
 		LoadIndex += 1
 		local load_id = LoadIndex
@@ -1517,24 +1545,7 @@ function ProfileStore:StartSessionAsync(profile_key, params)
 					if is_mock ~= true and DataStoreState == "Access" then
 						
 						-- Use MessagingService to quickly detect session conflicts and resolve them quickly:
-					
-						local last_roblox_message = 0
-						
-						profile.roblox_message_subscription = MessagingService:SubscribeAsync("PS_" .. unique_session_id, function(message)
-							if type(message.Data) == "table" and message.Data.LoadCount == profile.SessionLoadCount then
-								-- High reaction rate, based on numPlayers × 10 DataStore budget as of writing
-								if os.clock() - last_roblox_message > 6 then 
-									last_roblox_message = os.clock()
-									if profile:IsActive() == true then
-										if message.Data.EndSession == true then
-											SaveProfileAsync(profile, true, false, "External")
-										else
-											profile:Save()
-										end
-									end
-								end
-							end
-						end)
+						task.spawn(RobloxMessageSubscription, profile, unique_session_id) -- Blocking prevention
 						
 					end
 
@@ -1571,7 +1582,7 @@ function ProfileStore:StartSessionAsync(profile_key, params)
 						-- Request the remote server to end its session:
 						if type(active_session[3]) == "string" then
 							local session_load_count = loaded_data.MetaData.SessionLoadCount or 0
-							MessagingService:PublishAsync("PS_" .. active_session[3], {LoadCount = session_load_count, EndSession = true})
+							task.spawn(MessagingService.PublishAsync, MessagingService, "PS_" .. active_session[3], {LoadCount = session_load_count, EndSession = true})
 						end
 						
 						-- Attempt to load the profile again after a delay
@@ -1697,7 +1708,7 @@ function ProfileStore:MessageAsync(profile_key, message)
 				
 				if type(active_session) == "table" and type(active_session[3]) == "string" then
 					-- Request the remote server to auto-save sooner and receive the message:
-					MessagingService:PublishAsync("PS_" .. active_session[3], {LoadCount = session_load_count})
+					task.spawn(MessagingService.PublishAsync, MessagingService, "PS_" .. active_session[3], {LoadCount = session_load_count})
 				end
 				
 			end
