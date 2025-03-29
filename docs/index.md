@@ -11,6 +11,8 @@ If you want to save time writing code for player data caching or want to prevent
 
 If you need help integrating ProfileStore into your project, [join the discussion on the Roblox forums (Click here)](https://devforum.roblox.com/t/profilestore/3190543).
 
+Forward any bugs to the creator of this module - we'll try to fix bugs super quickly!
+
 ## How does it work?
 
 ProfileStore loads and caches data from a DataStore key on a single Roblox game server and
@@ -78,10 +80,6 @@ where data delivery is crucial.
 altering and reacting to data along ProfileStore's DataStore requests.
 
 ## Should I switch from ProfileService (the older module)?
-
-ProfileStore hasn't been used a lot in production yet, but has been thoroughly tested by similar
-tools that allowed ProfileService to stay mostly bug-free. Use this at your own risk and forward
-any bugs to the creator of this module - we'll try to fix bugs super quickly!
 
 It might be a good idea to let old projects keep using ProfileService and start using ProfileStore
 for brand new ones, but if you're feeling risky...
