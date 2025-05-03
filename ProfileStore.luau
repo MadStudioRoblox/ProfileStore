@@ -504,6 +504,118 @@ local function MockUpdateAsync(mock_data_store, profile_store_name, key, transfo
 
 end
 
+local function clean_utf8_string(str)
+	local result = {}
+	local i = 1
+
+	while i <= #str do
+		local c = string.byte(str, i)
+
+		if c >= 0x00 and c <= 0x7F then
+			table.insert(result, string.char(c))
+			i = i + 1
+		elseif c >= 0xC2 and c <= 0xDF then
+			local b2 = string.byte(str, i + 1)
+			if b2 and b2 >= 0x80 and b2 <= 0xBF then
+				table.insert(result, str:sub(i, i + 1))
+				i = i + 2
+			else
+				i = i + 1
+			end
+		elseif c == 0xE0 then
+			local b2 = string.byte(str, i + 1)
+			local b3 = string.byte(str, i + 2)
+			if b2 and b3 and b2 >= 0xA0 and b2 <= 0xBF and b3 >= 0x80 and b3 <= 0xBF then
+				table.insert(result, str:sub(i, i + 2))
+				i = i + 3
+			else
+				i = i + 1
+			end
+		elseif c >= 0xE1 and c <= 0xEC or c >= 0xEE and c <= 0xEF then
+			local b2 = string.byte(str, i + 1)
+			local b3 = string.byte(str, i + 2)
+			if b2 and b3 and b2 >= 0x80 and b2 <= 0xBF and b3 >= 0x80 and b3 <= 0xBF then
+				table.insert(result, str:sub(i, i + 2))
+				i = i + 3
+			else
+				i = i + 1
+			end
+		elseif c == 0xED then
+			local b2 = string.byte(str, i + 1)
+			local b3 = string.byte(str, i + 2)
+			if b2 and b3 and b2 >= 0x80 and b2 <= 0x9F and b3 >= 0x80 and b3 <= 0xBF then
+				table.insert(result, str:sub(i, i + 2))
+				i = i + 3
+			else
+				i = i + 1
+			end
+		elseif c == 0xF0 then
+			local b2 = string.byte(str, i + 1)
+			local b3 = string.byte(str, i + 2)
+			local b4 = string.byte(str, i + 3)
+			if b2 and b3 and b4 and b2 >= 0x90 and b2 <= 0xBF and b3 >= 0x80 and b3 <= 0xBF and b4 >= 0x80 and b4 <= 0xBF then
+				table.insert(result, str:sub(i, i + 3))
+				i = i + 4
+			else
+				i = i + 1
+			end
+		elseif c >= 0xF1 and c <= 0xF3 then
+			local b2 = string.byte(str, i + 1)
+			local b3 = string.byte(str, i + 2)
+			local b4 = string.byte(str, i + 3)
+			if b2 and b3 and b4 and b2 >= 0x80 and b2 <= 0xBF and b3 >= 0x80 and b3 <= 0xBF and b4 >= 0x80 and b4 <= 0xBF then
+				table.insert(result, str:sub(i, i + 3))
+				i = i + 4
+			else
+				i = i + 1
+			end
+		elseif c == 0xF4 then
+			local b2 = string.byte(str, i + 1)
+			local b3 = string.byte(str, i + 2)
+			local b4 = string.byte(str, i + 3)
+			if b2 and b3 and b4 and b2 >= 0x80 and b2 <= 0x8F and b3 >= 0x80 and b3 <= 0xBF and b4 >= 0x80 and b4 <= 0xBF then
+				table.insert(result, str:sub(i, i + 3))
+				i = i + 4
+			else
+				i = i + 1
+			end
+		else
+			i = i + 1
+		end
+	end
+
+	return table.concat(result)
+end
+
+local function clean_table(t)
+
+	--/Check if the table is valid
+	if type(t) ~= "table" then return end
+
+	--/Iterate through the table
+	for key, value in pairs(t) do
+		
+		--/Clean the key if it's a string
+		local cleaned_key = (type(key) == "string") and clean_utf8_string(key) or key
+
+		--/Recursively clean the table
+		if type(value) == "table" then
+			clean_table(value)
+		elseif type(value) == "string" then
+			value = clean_utf8_string(value)
+		end
+
+		--/Check if the key is different from the original key
+		if key ~= cleaned_key then
+			t[key] = nil
+		end
+
+		--/Set the cleaned key
+		t[cleaned_key] = value
+
+	end
+end
+
 local function UpdateAsync(profile_store, profile_key, transform_params, is_user_mock, is_get_call, version) --> loaded_data, key_info
 	--transform_params = {
 	--	ExistingProfileHandle = function(latest_data),
@@ -584,6 +696,9 @@ local function UpdateAsync(profile_store, profile_key, transform_params, is_user
 			if overwritten == true then
 				latest_data.WasOverwritten = true -- Temporary tag that will be removed on first save
 			end
+
+			--/Make sure the data is clean from utf8 characters
+			clean_table(latest_data)
 
 			return latest_data, latest_data.UserIds, latest_data.RobloxMetaData
 		end
