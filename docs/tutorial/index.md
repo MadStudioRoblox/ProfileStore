@@ -37,7 +37,7 @@ local PROFILE_TEMPLATE = {
 local Players = game:GetService("Players")
 
 local PlayerStore = ProfileStore.New("PlayerStore", PROFILE_TEMPLATE)
-local Profiles: {[player]: typeof(PlayerStore:StartSessionAsync())} = {}
+local Profiles: {[Player]: typeof(PlayerStore:StartSessionAsync())} = {}
 
 local function PlayerAdded(player)
 
