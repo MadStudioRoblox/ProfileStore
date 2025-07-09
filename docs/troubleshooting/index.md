@@ -11,7 +11,7 @@ By default, data saved with ProfileStore on Roblox Studio will not persist. This
 ProfileStore does not check `Profile.Data` for data that cannot be serialized - be aware
 that the DataStore can only save save data when your tables are devoid of:
 
-- `NaN` values - you can check if a number is `NaN` by comparing it with itself - `print(NaN == NaN) --> false` (e.g., `Profile.Data = {Experience = 0/0}`). `NaN` values are a result of division by zero and edge cases of some math operations (`math.acos(2)` is `-NaN`).
+- `NaN` values - you can check if a number is `NaN` by comparing it with itself - `print(NaN == NaN) --> true` (e.g., `Profile.Data = {Experience = 0/0}`). `NaN` values are a result of division by zero and edge cases of some math operations (`math.acos(2)` is `-NaN`).
 - Table keys that are neither strings nor numbers (e.g., `Profile.Data[game.Workspace] = true`).
 - Mixing string keys with number keys within the same table (e.g., `Profile.Data = {Coins = 100, [5] = "yes"}`).
 - Storing tables with non-sequential indexes (e.g., `Profile.Data = {[1] = "Apple", [2] = "Banana", [3546] = "Peanut"}`). If you really have to store non-sequential numbers as indexes, you will have to turn those numbers into `string` indexes: `Profile.Data.Friends[tostring(user_id)] = {GoodFriend = true}`.
