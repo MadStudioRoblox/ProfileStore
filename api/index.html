@@ -1,0 +1,1525 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://madstudioroblox.github.io/ProfileStore/api/">
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../tutorial/">
+      
+      
+      <link rel="icon" href="../images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.16">
+    
+    
+      
+        <title>API - ProfileStore</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.7e37652d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="lime">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#module" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="ProfileStore" class="md-header__button md-logo" aria-label="ProfileStore" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7s3.58 4 8 4 8-1.79 8-4-3.58-4-8-4M4 9v3c0 2.21 3.58 4 8 4s8-1.79 8-4V9c0 2.21-3.58 4-8 4s-8-1.79-8-4m0 5v3c0 2.21 3.58 4 8 4s8-1.79 8-4v-3c0 2.21-3.58 4-8 4s-8-1.79-8-4"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ProfileStore
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              API
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="lime"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/MadStudioRoblox/ProfileStore" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    MadStudioRoblox/ProfileStore
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  API
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../tutorial/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tutorial
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../datause/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  DataStore Use
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../devproducts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Developer Products
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="ProfileStore" class="md-nav__button md-logo" aria-label="ProfileStore" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7s3.58 4 8 4 8-1.79 8-4-3.58-4-8-4M4 9v3c0 2.21 3.58 4 8 4s8-1.79 8-4V9c0 2.21-3.58 4-8 4s-8-1.79-8-4m0 5v3c0 2.21 3.58 4 8 4s8-1.79 8-4v-3c0 2.21-3.58 4-8 4s-8-1.79-8-4"/></svg>
+
+    </a>
+    ProfileStore
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/MadStudioRoblox/ProfileStore" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    MadStudioRoblox/ProfileStore
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    API
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    API
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#module" class="md-nav__link">
+    <span class="md-ellipsis">
+      Module
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Module">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#isclosing" class="md-nav__link">
+    <span class="md-ellipsis">
+      .IsClosing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iscriticalstate" class="md-nav__link">
+    <span class="md-ellipsis">
+      .IsCriticalState
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onerror" class="md-nav__link">
+    <span class="md-ellipsis">
+      .OnError
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onoverwrite" class="md-nav__link">
+    <span class="md-ellipsis">
+      .OnOverwrite
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oncriticaltoggle" class="md-nav__link">
+    <span class="md-ellipsis">
+      .OnCriticalToggle
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#datastorestate" class="md-nav__link">
+    <span class="md-ellipsis">
+      .DataStoreState
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new" class="md-nav__link">
+    <span class="md-ellipsis">
+      .New()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setconstant" class="md-nav__link">
+    <span class="md-ellipsis">
+      .SetConstant()
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#profilestore" class="md-nav__link">
+    <span class="md-ellipsis">
+      ProfileStore
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ProfileStore">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mock" class="md-nav__link">
+    <span class="md-ellipsis">
+      .Mock
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#name" class="md-nav__link">
+    <span class="md-ellipsis">
+      .Name
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#startsessionasync" class="md-nav__link">
+    <span class="md-ellipsis">
+      :StartSessionAsync()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#messageasync" class="md-nav__link">
+    <span class="md-ellipsis">
+      :MessageAsync()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getasync" class="md-nav__link">
+    <span class="md-ellipsis">
+      :GetAsync()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#versionquery" class="md-nav__link">
+    <span class="md-ellipsis">
+      :VersionQuery()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removeasync" class="md-nav__link">
+    <span class="md-ellipsis">
+      :RemoveAsync()
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      Profile
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Profile">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#data" class="md-nav__link">
+    <span class="md-ellipsis">
+      .Data
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lastsaveddata" class="md-nav__link">
+    <span class="md-ellipsis">
+      .LastSavedData
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#firstsessiontime" class="md-nav__link">
+    <span class="md-ellipsis">
+      .FirstSessionTime
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sessionloadcount" class="md-nav__link">
+    <span class="md-ellipsis">
+      .SessionLoadCount
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#session" class="md-nav__link">
+    <span class="md-ellipsis">
+      .Session
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#robloxmetadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      .RobloxMetaData
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#userids" class="md-nav__link">
+    <span class="md-ellipsis">
+      .UserIds
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keyinfo" class="md-nav__link">
+    <span class="md-ellipsis">
+      .KeyInfo
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onsave" class="md-nav__link">
+    <span class="md-ellipsis">
+      .OnSave
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onlastsave" class="md-nav__link">
+    <span class="md-ellipsis">
+      .OnLastSave
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onsessionend" class="md-nav__link">
+    <span class="md-ellipsis">
+      .OnSessionEnd
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#onaftersave" class="md-nav__link">
+    <span class="md-ellipsis">
+      .OnAfterSave
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#profilestore_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      .ProfileStore
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key" class="md-nav__link">
+    <span class="md-ellipsis">
+      .Key
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isactive" class="md-nav__link">
+    <span class="md-ellipsis">
+      :IsActive()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reconcile" class="md-nav__link">
+    <span class="md-ellipsis">
+      :Reconcile()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#endsession" class="md-nav__link">
+    <span class="md-ellipsis">
+      :EndSession()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adduserid" class="md-nav__link">
+    <span class="md-ellipsis">
+      :AddUserId()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removeuserid" class="md-nav__link">
+    <span class="md-ellipsis">
+      :RemoveUserId()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#messagehandler" class="md-nav__link">
+    <span class="md-ellipsis">
+      :MessageHandler()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#save" class="md-nav__link">
+    <span class="md-ellipsis">
+      :Save()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setasync" class="md-nav__link">
+    <span class="md-ellipsis">
+      :SetAsync()
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tutorial
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Troubleshooting
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../datause/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DataStore Use
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../devproducts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Developer Products
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+  <h1>API</h1>
+
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>Methods with <code>Async</code> in their name are methods that will yield - similar to how <code>task.wait()</code> is a function that yields</p>
+</div>
+<h2 id="module">Module</h2>
+<h3 id="isclosing">.IsClosing</h3>
+<p><div class="highlight"><pre><span></span><code><span class="nv">ProfileStore</span><span class="p">.</span><span class="nv">IsClosing</span><span class="w">   </span><span class="p">[</span><span class="nv">bool</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="nv">read</span><span class="o">-</span><span class="nv">only</span><span class="p">)</span>
+</code></pre></div>
+When the Roblox is shutting down this value will be set to <code>true</code> and
+most methods will silently fail.</p>
+<h3 id="iscriticalstate">.IsCriticalState</h3>
+<p><div class="highlight"><pre><span></span><code><span class="nv">ProfileStore</span><span class="p">.</span><span class="nv">IsCriticalState</span><span class="w">   </span><span class="p">[</span><span class="nv">bool</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="nv">read</span><span class="o">-</span><span class="nv">only</span><span class="p">)</span>
+</code></pre></div>
+After an excessive amount of DataStore calls fail this value will temporarily
+be set to <code>true</code> until the DataStore starts operating normally again. Might be
+useful for analytics or notifying players in-game of possible service disturbances.</p>
+<h3 id="onerror">.OnError</h3>
+<p><div class="highlight"><pre><span></span><code><span class="nv">ProfileStore</span><span class="p">.</span><span class="nv">OnError</span><span class="w">   </span><span class="p">[</span><span class="nv">Signal</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="nv">message</span><span class="p">,</span><span class="w"> </span><span class="nv">store_name</span><span class="p">,</span><span class="w"> </span><span class="nv">profile_key</span><span class="p">)</span>
+</code></pre></div>
+A signal for DataStore error logging. Example:
+<div class="highlight"><pre><span></span><code><span class="nv">ProfileStore</span><span class="p">.</span><span class="nv">OnError</span><span class="p">:</span><span class="nc">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">error_message</span><span class="p">,</span><span class="w"> </span><span class="nv">store_name</span><span class="p">,</span><span class="w"> </span><span class="nv">profile_key</span><span class="p">)</span>
+<span class="w">  </span><span class="nf">print</span><span class="p">(</span><span class="sb">`DataStore error (Store:</span><span class="p">{</span><span class="nv">store_name</span><span class="p">}</span><span class="sb">;Key:</span><span class="p">{</span><span class="nv">profile_key</span><span class="p">}</span><span class="sb">): </span><span class="p">{</span><span class="nv">error_message</span><span class="p">}</span><span class="sb">`</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+</code></pre></div></p>
+<h3 id="onoverwrite">.OnOverwrite</h3>
+<p><div class="highlight"><pre><span></span><code><span class="nv">ProfileStore</span><span class="p">.</span><span class="nv">OnOverwrite</span><span class="w">   </span><span class="p">[</span><span class="nv">Signal</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="nv">store_name</span><span class="p">,</span><span class="w"> </span><span class="nv">profile_key</span><span class="p">)</span>
+</code></pre></div>
+A signal for events when a DataStore key returns a value that has all or some
+of it's profile components set to invalid data types. E.g., accidentally setting
+<code>Profile.Data</code> to a non table value. Example:
+<div class="highlight"><pre><span></span><code><span class="nv">ProfileStore</span><span class="p">.</span><span class="nv">OnOverwrite</span><span class="p">:</span><span class="nc">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">store_name</span><span class="p">,</span><span class="w"> </span><span class="nv">profile_key</span><span class="p">)</span>
+<span class="w">  </span><span class="nf">print</span><span class="p">(</span><span class="sb">`Overwrite has occurred for Store:</span><span class="p">{</span><span class="nv">store_name</span><span class="p">}</span><span class="sb">, Key:</span><span class="p">{</span><span class="nv">profile_key</span><span class="p">}</span><span class="sb">`</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+</code></pre></div></p>
+<h3 id="oncriticaltoggle">.OnCriticalToggle</h3>
+<p><div class="highlight"><pre><span></span><code><span class="nv">ProfileStore</span><span class="p">.</span><span class="nv">OnCriticalToggle</span><span class="w">   </span><span class="p">[</span><span class="nv">Signal</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="nv">is_critical</span><span class="p">)</span>
+</code></pre></div>
+A signal that is called whenever <code>ProfileStore.IsCriticalState</code> changes. Example:
+<div class="highlight"><pre><span></span><code><span class="nv">ProfileStore</span><span class="p">.</span><span class="nv">OnCriticalToggle</span><span class="p">:</span><span class="nc">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">is_critical</span><span class="p">)</span>
+<span class="w">  </span><span class="kr">if</span><span class="w"> </span><span class="nv">is_critical</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="kr">then</span>
+<span class="w">    </span><span class="nf">print</span><span class="p">(</span><span class="sb">`ProfileStore entered critical state`</span><span class="p">)</span>
+<span class="w">  </span><span class="kr">else</span>
+<span class="w">    </span><span class="nf">print</span><span class="p">(</span><span class="sb">`ProfileStore critical state is over`</span><span class="p">)</span>
+<span class="w">  </span><span class="kr">end</span>
+<span class="kr">end</span><span class="p">)</span>
+</code></pre></div></p>
+<h3 id="datastorestate">.DataStoreState</h3>
+<p><div class="highlight"><pre><span></span><code><span class="nv">ProfileStore</span><span class="p">.</span><span class="nv">DataStoreState</span><span class="w">   </span><span class="p">[</span><span class="nb">string</span><span class="p">]</span><span class="w"> </span><span class="s2">&quot;NotReady&quot;</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="s2">&quot;NoInternet&quot;</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="s2">&quot;NoAccess&quot;</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="s2">&quot;Access&quot;</span>
+</code></pre></div>
+Indicates ProfileStore's access to the DataStore. If at first check <code>ProfileStore.DataStoreState</code>
+is <code>"NotReady"</code>, it will eventually change to one of the other 3 possible values (<code>NoInternet</code>, <code>NoAccess</code> or <code>Access</code>) and
+never change again. <code>"Access"</code> means ProfileStore can write to the DataStore.</p>
+<h3 id="new">.New()</h3>
+<p><div class="highlight"><pre><span></span><code><span class="nv">ProfileStore</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="nv">store_name</span><span class="p">,</span><span class="w"> </span><span class="nv">template</span><span class="err">?</span><span class="p">)</span><span class="w"> </span><span class="c1">--&gt; [ProfileStore]</span>
+<span class="w">  </span><span class="c1">-- store_name   [string] -- DataStore name</span>
+<span class="w">  </span><span class="c1">-- template     nil or [table] -- Profile.Data will default</span>
+<span class="w">    </span><span class="c1">-- to given table (deep-copy) when no data was saved previously</span>
+</code></pre></div>
+<code>ProfileStore</code> objects expose methods for reading and writing to profiles. Equivalent of <a href="https://create.roblox.com/docs/reference/engine/classes/DataStoreService#GetDataStore">:GetDataStore()</a>
+in Roblox <a href="https://create.roblox.com/docs/reference/engine/classes/DataStoreService">DataStoreService</a> API.</p>
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>By default, <code>template</code> is only copied for <code>Profile.Data</code> for new profiles. Changes made to <code>template</code> can be applied to <code>Profile.Data</code> of previously saved profiles by calling <a href="#reconcile">Profile:Reconcile()</a>.
+Using templates and reconciliation is completely optional and you may alter <code>Profile.Data</code> with your own code alone.</p>
+</div>
+<h3 id="setconstant">.SetConstant()</h3>
+<p><div class="highlight"><pre><span></span><code><span class="nv">ProfileStore</span><span class="p">.</span><span class="nf">SetConstant</span><span class="p">(</span><span class="nv">name</span><span class="p">,</span><span class="w"> </span><span class="nv">value</span><span class="p">)</span>
+<span class="w">  </span><span class="c1">-- name    [string] &quot;AUTO_SAVE_PERIOD&quot; | &quot;LOAD_REPEAT_PERIOD&quot; | &quot;FIRST_LOAD_REPEAT&quot; | &quot;SESSION_STEAL&quot;</span>
+<span class="err">|</span><span class="w">   </span><span class="c1">-- &quot;ASSUME_DEAD&quot; | &quot;START_SESSION_TIMEOUT&quot; | &quot;CRITICAL_STATE_ERROR_COUNT&quot; | &quot;CRITICAL_STATE_ERROR_EXPIRE&quot;</span>
+<span class="err">|</span><span class="w">   </span><span class="c1">-- &quot;CRITICAL_STATE_EXPIRE&quot; | &quot;MAX_MESSAGE_QUEUE&quot;</span>
+<span class="w">  </span><span class="c1">-- value   [number]</span>
+</code></pre></div>
+A feature for experienced developers who understand how ProfileStore works for changing internal constants
+without having to fork the ProfileStore project.</p>
+<h2 id="profilestore">ProfileStore</h2>
+<h3 id="mock">.Mock</h3>
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">PlayerStore</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">ProfileStore</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s2">&quot;PlayerData&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{})</span>
+
+<span class="c1">-- This profile would be saved to the DataStore:</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">LiveProfile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">PlayerStore</span><span class="p">:</span><span class="nf">StartSessionAsync</span><span class="p">(</span><span class="s2">&quot;profile_key&quot;</span><span class="p">)</span>
+<span class="nv">LiveProfile</span><span class="p">.</span><span class="py">Data</span><span class="p">.</span><span class="py">Value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="nv">LiveProfile</span><span class="p">:</span><span class="nf">EndSession</span><span class="p">()</span>
+
+<span class="c1">-- This profile does not load data from the DataStore</span>
+<span class="c1">-- nor save data to the DataStore:</span>
+<span class="c1">-- (This data will disappear after the game server shuts down)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">MockProfile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">PlayerStore</span><span class="p">.</span><span class="py">Mock</span><span class="p">:</span><span class="nf">StartSessionAsync</span><span class="p">(</span><span class="s2">&quot;profile_key&quot;</span><span class="p">)</span>
+<span class="nv">MockProfile</span><span class="p">.</span><span class="py">Data</span><span class="p">.</span><span class="py">Value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="nv">MockProfile</span><span class="p">:</span><span class="nf">EndSession</span><span class="p">()</span>
+</code></pre></div>
+<p><code>ProfileStore.Mock</code> is a reflection of methods available in the <code>ProfileStore</code>, but said methods will now operate
+on profiles stored on a separate "fake" DataStore that will be forgotten when the game server shuts down. Profiles loaded
+using the same key from <code>ProfileStore</code> and <code>ProfileStore.Mock</code> will be different profiles because the regular and mock versions of a <code>ProfileStore</code> are isolated from each other.</p>
+<p><code>ProfileStore.Mock</code> is useful for customizing your testing environment in cases where you want
+to <a href="https://create.roblox.com/docs/cloud-services/data-stores#enable-studio-access">enable Roblox API services</a> in studio,
+but don't want ProfileStore to save to live keys:
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">RunService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">game</span><span class="p">:</span><span class="nc">GetService</span><span class="p">(</span><span class="s2">&quot;RunService&quot;</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">PlayerStore</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">ProfileStore</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s2">&quot;PlayerData&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{})</span>
+<span class="kr">if</span><span class="w"> </span><span class="nv">RunService</span><span class="p">:</span><span class="nc">IsStudio</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="kr">then</span>
+<span class="w">  </span><span class="nv">PlayerStore</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">PlayerStore</span><span class="p">.</span><span class="nv">Mock</span>
+<span class="kr">end</span>
+</code></pre></div></p>
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>Even when Roblox API services are unavailable, <code>ProfileStore</code> and <code>ProfileStore.Mock</code> will store profiles separately from each other.</p>
+</div>
+<h3 id="name">.Name</h3>
+<p><div class="highlight"><pre><span></span><code><span class="nv">ProfileStore</span><span class="p">.</span><span class="nv">Name</span><span class="w">   </span><span class="p">[</span><span class="nb">string</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="nv">read</span><span class="o">-</span><span class="nv">only</span><span class="p">)</span>
+</code></pre></div>
+The name of the DataStore that was defined as the first argument of <code>ProfileStore.New()</code>.</p>
+<h3 id="startsessionasync">:StartSessionAsync()</h3>
+<p><div class="highlight"><pre><span></span><code><span class="nv">ProfileStore</span><span class="p">:</span><span class="nc">StartSessionAsync</span><span class="p">(</span><span class="nv">profile_key</span><span class="p">,</span><span class="w"> </span><span class="nv">params</span><span class="err">?</span><span class="p">)</span><span class="w"> </span><span class="c1">--&gt; [Profile] or nil</span>
+<span class="w">  </span><span class="c1">-- profile_key   [string] -- DataStore key</span>
+<span class="w">  </span><span class="c1">-- params        nil or [table]: {</span>
+<span class="w">  </span><span class="c1">--    Cancel: fn() -&gt; (boolean)?</span>
+<span class="w">  </span><span class="c1">--    Steal: boolean?</span>
+<span class="w">  </span><span class="c1">-- }</span>
+</code></pre></div>
+Starts a session for a profile. If other servers call this method using the same <code>profile_key</code>
+they would notify the server that currently owns the session to make a final save before
+letting another server acquire the session. While a session is active you can expect any
+changes to <code>Profile.Data</code> to be saved. You can find out whether a session has ended by checking <code>Profile:IsActive() == true</code>
+or by listening to <code>Profile.OnSessionEnd</code>. You must always call <code>Profile:EndSession()</code> after
+you're done working with a profile as failing to do so will make the game perform more and more DataStore requests.</p>
+<p>The second optional argument to <code>ProfileStore:StartSessionAsync()</code> is a table with additional rules for the session start request:</p>
+<ul>
+<li><strong><code>Cancel</code></strong> - If set to a function, the function will be called several times by ProfileStore to check whether
+the profile session is still needed. If the profile is no longer needed, the <code>Cancel</code> function should return <code>true</code>.
+The <code>Cancel</code> argument would be useful in rare cases where the DataStores are unresponsive and a player leaves
+before a session was started allowing ProfileStore to stop making additional requests to the DataStore.
+Using the <code>Cancel</code> argument also disables the default ProfileStore session start timeout as the developer
+would decide when the profile is no longer needed.</li>
+<li><strong><code>Steal</code></strong> - (e.g. <code>{Steal = true}</code>) If set to <code>true</code>, doesn't let an active session make final changes to <code>Profile.Data</code>
+and immediately starts a session on the server calling <code>ProfileStore:StartSessionAsync()</code> with this argument.
+<strong>DO NOT USE THIS ARGUMENT FOR LOADING PLAYER DATA NORMALLY</strong> - The <code>Steal</code> argument bypasses session locks which are needed for item "dupe" prevention.
+This argument is only useful for debugging.</li>
+</ul>
+<div class="admonition failure">
+<p class="admonition-title">The <code>Steal</code> argument bypasses session locks which are needed for item "dupe" prevention - use this only if you know what you are doing</p>
+</div>
+<p>Example usage:
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">Players</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">game</span><span class="p">:</span><span class="nc">GetService</span><span class="p">(</span><span class="s2">&quot;Players&quot;</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">profile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">PlayerStore</span><span class="p">:</span><span class="nc">StartSessionAsync</span><span class="p">(</span><span class="nf">tostring</span><span class="p">(</span><span class="nv">player</span><span class="p">.</span><span class="nv">UserId</span><span class="p">),</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nv">Cancel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kr">function</span><span class="p">()</span>
+<span class="w">    </span><span class="kr">return</span><span class="w"> </span><span class="nv">player</span><span class="p">:</span><span class="nc">IsDescendantOf</span><span class="p">(</span><span class="nv">Players</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">  </span><span class="kr">end</span><span class="p">,</span>
+<span class="p">})</span>
+</code></pre></div></p>
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>ProfileStore saves profiles to live DataStore keys in Roblox Studio when <a href="https://create.roblox.com/docs/cloud-services/data-stores#enable-studio-access">Roblox API services are enabled</a>. See <a href="#mock">ProfileStore.Mock</a> if saving to live keys during testing is not desired.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code>:StartSessionAsync()</code> can return <code>nil</code> when another remote Roblox server attempts to start a session for the same profile at the same time.
+This case should be extremely rare and it would be recommended to <a href="https://create.roblox.com/docs/reference/engine/classes/Player#Kick">:Kick()</a>
+the player if <code>:StartSessionAsync()</code> does not return a <code>Profile</code> object.</p>
+</div>
+<h3 id="messageasync">:MessageAsync()</h3>
+<p><div class="highlight"><pre><span></span><code><span class="nv">ProfileStore</span><span class="p">:</span><span class="nc">MessageAsync</span><span class="p">(</span><span class="nv">profile_key</span><span class="p">,</span><span class="w"> </span><span class="nv">message</span><span class="p">)</span><span class="w"> </span><span class="c1">--&gt; is_success [bool]</span>
+<span class="w">  </span><span class="c1">-- profile_key   [string] -- DataStore key</span>
+<span class="w">  </span><span class="c1">-- message       [table] -- Data to be stored in the profile before it&#39;s received</span>
+</code></pre></div>
+Sends a message to a profile regardless of whether a server has started a session for it.
+Each <code>ProfileStore:MessageAsync()</code> call will use one <a href="https://create.roblox.com/docs/reference/engine/classes/GlobalDataStore#UpdateAsync">:UpdateAsync()</a>
+call for sending the message and another <a href="https://create.roblox.com/docs/reference/engine/classes/GlobalDataStore#UpdateAsync">:UpdateAsync()</a>
+call on the server that currently has a session started for the profile - This means
+that <code>ProfileStore:MessageAsync()</code> is only to be used for when handling critical data like <strong>gifting
+paid items to in-game friends that may or may not be online at the moment</strong>. If you don't mind the possibility
+of your messages failing to deliver, use <a href="https://create.roblox.com/docs/reference/engine/classes/MessagingService">MessagingService</a> instead.
+See <a href="#messagehandler"><code>Profile:MessageHandler()</code></a> to learn how to receive messages.</p>
+<h3 id="getasync">:GetAsync()</h3>
+<p><div class="highlight"><pre><span></span><code><span class="nv">ProfileStore</span><span class="p">:</span><span class="nc">GetAsync</span><span class="p">(</span><span class="nv">profile_key</span><span class="p">,</span><span class="w"> </span><span class="nv">version</span><span class="err">?</span><span class="p">)</span><span class="w"> </span><span class="c1">--&gt; [Profile] or nil</span>
+<span class="w">  </span><span class="c1">-- profile_key   [string]</span>
+<span class="w">  </span><span class="c1">-- version       nil or [string] -- DataStore key version</span>
+</code></pre></div>
+Attempts to load the latest profile version (or a specified version via the <code>version</code> argument) from the DataStore without starting a session.
+Returned <code>Profile</code> will not auto-save and you won't have to call <code>:EndSession()</code> for it.
+Data in the returned <code>Profile</code> can be edited to create a payload which can be saved via <a href="#setasync">Profile:SetAsync()</a>.
+If there's no data saved in the DataStore under a provided <code>profile_key</code>, <code>ProfileStore:GetAsync()</code> will return <code>nil</code>.</p>
+<p><code>:GetAsync()</code> is the the preferred way of reading player data without editing it.</p>
+<div class="admonition warning">
+<p class="admonition-title"><code>Profile.Data</code> will not be auto-saved when using <code>ProfileStore:GetAsync()</code></p>
+</div>
+<h3 id="versionquery">:VersionQuery()</h3>
+<p><div class="highlight"><pre><span></span><code><span class="nv">ProfileStore</span><span class="p">:</span><span class="nf">VersionQuery</span><span class="p">(</span><span class="nv">profile_key</span><span class="p">,</span><span class="w"> </span><span class="nv">sort_direction</span><span class="err">?</span><span class="p">,</span><span class="w"> </span><span class="nv">min_date</span><span class="err">?</span><span class="p">,</span><span class="w"> </span><span class="nv">max_date</span><span class="err">?</span><span class="p">)</span><span class="w"> </span><span class="c1">--&gt; [VersionQuery]</span>
+<span class="w">  </span><span class="c1">-- profile_key      [string]</span>
+<span class="w">  </span><span class="c1">-- sort_direction   nil or [Enum.SortDirection] -- Defaults to &quot;Ascending&quot;</span>
+<span class="w">  </span><span class="c1">-- min_date         nil or [DateTime] or [number] (epoch time millis)</span>
+<span class="w">  </span><span class="c1">-- max_date         nil or [DateTime] or [number] (epoch time millis)</span>
+</code></pre></div>
+Creates a profile version query using <a href="https://create.roblox.com/docs/reference/engine/classes/DataStore#ListVersionsAsync">DataStore:ListVersionsAsync() (Official documentation)</a>. Results are retrieved through <code>VersionQuery:NextAsync()</code>.
+Date definitions are easier with the <a href="https://create.roblox.com/docs/reference/engine/datatypes/DateTime">DateTime (Official documentation)</a> library. User defined day and time will have to be converted to <a href="https://en.wikipedia.org/wiki/Unix_time">Unix time (Wikipedia)</a> while taking their timezone into account to expect the most precise results, though you can be rough and just set the date and time in the UTC timezone and expect a maximum margin of error of 24 hours for your query results.</p>
+<p><strong>Examples of query arguments:</strong></p>
+<ul>
+<li>Pass <code>nil</code> for <code>sort_direction</code>, <code>min_date</code> and <code>max_date</code> to find the oldest available version</li>
+<li>Pass <code>Enum.SortDirection.Descending</code> for <code>sort_direction</code>, <code>nil</code> for <code>min_date</code> and <code>max_date</code> to find the most recent version.</li>
+<li>Pass <code>Enum.SortDirection.Descending</code> for <code>sort_direction</code>, <code>nil</code> for <code>min_date</code> and <code>DateTime</code> <strong>defining a time before an event</strong>
+    (e.g. two days earlier before your game unrightfully stole 1,000,000 coins from a player) for <code>max_date</code> to find the most recent
+    version of a <code>Profile</code> that existed before said event.</li>
+</ul>
+<p><strong>Case example: "I lost all of my coins on August 14th!"</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Get a ProfileStore object with the same arguments you passed to the</span>
+<span class="c1">--  ProfileStore that loads player Profiles:</span>
+
+<span class="kd">local</span><span class="w"> </span><span class="nv">PlayerStore</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">ProfileStore</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s2">&quot;PlayerData&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{})</span>
+
+<span class="c1">-- If you can&#39;t figure out the exact time and timezone the player lost coins</span>
+<span class="c1">--  in on the day of August 14th, then your best bet is to try querying</span>
+<span class="c1">--  UTC August 13th. If the first entry still doesn&#39;t have the coins - </span>
+<span class="c1">--  try a new query of UTC August 12th and etc.</span>
+
+<span class="kd">local</span><span class="w"> </span><span class="nv">max_date</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">DateTime</span><span class="p">.</span><span class="nf">fromUniversalTime</span><span class="p">(</span><span class="mi">2021</span><span class="p">,</span><span class="w"> </span><span class="mi">08</span><span class="p">,</span><span class="w"> </span><span class="mi">13</span><span class="p">)</span><span class="w"> </span><span class="c1">-- UTC August 13th, 2021</span>
+
+<span class="kd">local</span><span class="w"> </span><span class="nv">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">PlayerStore</span><span class="p">:</span><span class="nf">VersionQuery</span><span class="p">(</span>
+<span class="w">  </span><span class="s2">&quot;Player_2312310&quot;</span><span class="p">,</span><span class="w"> </span><span class="c1">-- The same profile key that gets passed to :LoadProfileAsync()</span>
+<span class="w">  </span><span class="nv">Enum</span><span class="p">.</span><span class="py">SortDirection</span><span class="p">.</span><span class="py">Descending</span><span class="p">,</span>
+<span class="w">  </span><span class="kc">nil</span><span class="p">,</span>
+<span class="w">  </span><span class="nv">max_date</span>
+<span class="p">)</span>
+
+<span class="c1">-- Get the first result in the query:</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">profile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">query</span><span class="p">:</span><span class="nf">NextAsync</span><span class="p">()</span>
+
+<span class="kr">if</span><span class="w"> </span><span class="nv">profile</span><span class="w"> </span><span class="o">~=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="kr">then</span>
+
+<span class="w">  </span><span class="nv">profile</span><span class="p">:</span><span class="nf">SetAsync</span><span class="p">()</span><span class="w"> </span><span class="c1">-- This method does the actual rolling back;</span>
+<span class="w">    </span><span class="c1">-- Don&#39;t call this method until you&#39;re sure about setting the latest</span>
+<span class="w">    </span><span class="c1">-- version to a copy of the previous one</span>
+
+<span class="w">  </span><span class="nb">print</span><span class="p">(</span><span class="err">`</span><span class="nv">Rollback</span><span class="w"> </span><span class="nv">success</span><span class="err">!`</span><span class="p">)</span>
+
+<span class="w">  </span><span class="nb">print</span><span class="p">(</span><span class="nv">profile</span><span class="p">.</span><span class="py">Data</span><span class="p">)</span><span class="w"> </span><span class="c1">-- You&#39;ll be able to surf table contents if</span>
+<span class="w">    </span><span class="c1">-- you&#39;re running this code in studio with access to API services</span>
+<span class="w">    </span><span class="c1">-- enabled and have expressive output enabled; If the printed</span>
+<span class="w">    </span><span class="c1">-- data doesn&#39;t have the coins, you&#39;ll want to change your</span>
+<span class="w">    </span><span class="c1">-- query parameters.</span>
+
+<span class="kr">else</span>
+<span class="w">  </span><span class="nb">print</span><span class="p">(</span><span class="err">`</span><span class="nv">No</span><span class="w"> </span><span class="nv">version</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">rollback</span><span class="w"> </span><span class="nv">to</span><span class="err">`</span><span class="p">)</span>
+<span class="kr">end</span>
+</code></pre></div>
+<p><strong>Case example: Studying data mutation over time</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- You have ProfileStore working in your game. You join</span>
+<span class="c1">--  the game with your own account and go to https://www.unixtimestamp.com</span>
+<span class="c1">--  and save the current UNIX timestamp resembling present time.</span>
+<span class="c1">--  You can then make the game alter your data by giving you</span>
+<span class="c1">--  currency, items, experience, etc.</span>
+
+<span class="kd">local</span><span class="w"> </span><span class="nv">PlayerStore</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">ProfileStore</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s2">&quot;PlayerData&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{})</span>
+
+<span class="c1">-- UNIX timestamp you saved:</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">min_date</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">DateTime</span><span class="p">.</span><span class="nf">fromUnixTimestamp</span><span class="p">(</span><span class="mi">1628952101</span><span class="p">)</span>
+<span class="kd">local</span><span class="w"> </span><span class="nv">print_minutes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">60</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">12</span><span class="w"> </span><span class="c1">-- Print the next 12 hours of history</span>
+
+<span class="kd">local</span><span class="w"> </span><span class="nv">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">PlayerStore</span><span class="p">:</span><span class="nf">VersionQuery</span><span class="p">(</span>
+<span class="w">  </span><span class="s2">&quot;Player_2312310&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nv">Enum</span><span class="p">.</span><span class="py">SortDirection</span><span class="p">.</span><span class="py">Ascending</span><span class="p">,</span>
+<span class="w">  </span><span class="nv">min_date</span>
+<span class="p">)</span>
+
+<span class="c1">-- You can now attempt to print out every snapshot of your data saved</span>
+<span class="c1">--  at an average periodic interval of 60 minutes (Roblox DataStore caching interval)</span>
+<span class="c1">--  starting from the time you took the UNIX timestamp!</span>
+
+<span class="kd">local</span><span class="w"> </span><span class="nv">finish_update_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">min_date</span><span class="p">.</span><span class="py">UnixTimestampMillis</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="nv">print_minutes</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">60000</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="err">`</span><span class="nv">Fetching</span><span class="w"> </span><span class="p">{</span><span class="nv">print_minutes</span><span class="p">}</span><span class="w"> </span><span class="nv">minutes</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">saves</span><span class="p">:</span><span class="err">`)</span>
+
+<span class="py">local</span><span class="w"> </span><span class="nv">entry_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+
+<span class="kr">while</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="kr">do</span>
+
+<span class="w">  </span><span class="nv">entry_count</span><span class="w"> </span><span class="o">+=</span><span class="mi">1</span>
+<span class="w">  </span><span class="kd">local</span><span class="w"> </span><span class="nv">profile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">query</span><span class="p">:</span><span class="nf">NextAsync</span><span class="p">()</span>
+
+<span class="w">  </span><span class="kr">if</span><span class="w"> </span><span class="nv">profile</span><span class="w"> </span><span class="o">~=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="kr">then</span>
+
+<span class="w">    </span><span class="kr">if</span><span class="w"> </span><span class="nv">profile</span><span class="p">.</span><span class="py">KeyInfo</span><span class="p">.</span><span class="py">UpdatedTime</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nv">finish_update_time</span><span class="w"> </span><span class="kr">then</span>
+<span class="w">      </span><span class="kr">if</span><span class="w"> </span><span class="nv">entry_count</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="kr">then</span>
+<span class="w">        </span><span class="nb">print</span><span class="p">(</span><span class="err">`</span><span class="nv">No</span><span class="w"> </span><span class="nv">entries</span><span class="w"> </span><span class="nv">found</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="nv">set</span><span class="w"> </span><span class="nv">time</span><span class="w"> </span><span class="nv">period</span><span class="p">.</span><span class="w"> </span><span class="err">(</span><span class="py">Start</span><span class="w"> </span><span class="nv">timestamp</span><span class="w"> </span><span class="nv">too</span><span class="w"> </span><span class="nv">early</span><span class="p">)</span><span class="err">`</span><span class="p">)</span>
+<span class="w">      </span><span class="kr">else</span>
+<span class="w">        </span><span class="nb">print</span><span class="p">(</span><span class="err">`</span><span class="nv">Time</span><span class="w"> </span><span class="nv">period</span><span class="w"> </span><span class="nv">finished</span><span class="p">.</span><span class="err">`)</span>
+<span class="w">      </span><span class="py">end</span>
+<span class="w">      </span><span class="kr">break</span>
+<span class="w">    </span><span class="kr">end</span>
+
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="err">`</span><span class="nv">Entry</span><span class="w"> </span><span class="p">{</span><span class="nv">entry_count</span><span class="p">}</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">{</span><span class="nv">DateTime</span><span class="p">.</span><span class="nf">fromUnixTimestampMillis</span><span class="p">(</span><span class="nv">profile</span><span class="p">.</span><span class="py">KeyInfo</span><span class="p">.</span><span class="py">UpdatedTime</span><span class="p">):</span><span class="nf">ToIsoDate</span><span class="p">()}</span><span class="err">`</span><span class="p">)</span>
+
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="nv">profile</span><span class="p">.</span><span class="py">Data</span><span class="p">)</span><span class="w"> </span><span class="c1">-- Printing table for studio expressive output</span>
+
+<span class="w">  </span><span class="kr">else</span>
+<span class="w">    </span><span class="kr">if</span><span class="w"> </span><span class="nv">entry_count</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="kr">then</span>
+<span class="w">      </span><span class="nb">print</span><span class="p">(</span><span class="err">`</span><span class="nv">No</span><span class="w"> </span><span class="nv">entries</span><span class="w"> </span><span class="nv">found</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="nv">set</span><span class="w"> </span><span class="nv">time</span><span class="w"> </span><span class="nv">period</span><span class="p">.</span><span class="w"> </span><span class="err">(</span><span class="py">Start</span><span class="w"> </span><span class="nv">timestamp</span><span class="w"> </span><span class="nv">too</span><span class="w"> </span><span class="nv">late</span><span class="p">)</span><span class="err">`</span><span class="p">)</span>
+<span class="w">    </span><span class="kr">else</span>
+<span class="w">      </span><span class="nb">print</span><span class="p">(</span><span class="err">`</span><span class="nv">No</span><span class="w"> </span><span class="nv">more</span><span class="w"> </span><span class="nv">entries</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="nv">query</span><span class="p">.</span><span class="err">`)</span>
+<span class="w">    </span><span class="py">end</span>
+<span class="w">    </span><span class="kr">break</span>
+<span class="w">  </span><span class="kr">end</span>
+
+<span class="kr">end</span>
+</code></pre></div>
+<h3 id="removeasync">:RemoveAsync()</h3>
+<p><div class="highlight"><pre><span></span><code><span class="nv">ProfileStore</span><span class="p">:</span><span class="nc">RemoveAsync</span><span class="p">(</span><span class="nv">profile_key</span><span class="p">)</span><span class="w"> </span><span class="c1">--&gt; is_success [bool]</span>
+<span class="w">  </span><span class="c1">-- profile_key   [string] -- DataStore key</span>
+</code></pre></div>
+You can use <code>:RemoveAsync()</code> to erase data from the DataStore. In live Roblox servers <code>:RemoveAsync()</code> must be used on
+profiles created through <code>ProfileStore.Mock</code> after <code>Profile:EndSession()</code> and it's known that the <code>Profile</code> will no longer be loaded again.</p>
+<h2 id="profile">Profile</h2>
+<h3 id="data">.Data</h3>
+<p><div class="highlight"><pre><span></span><code><span class="nv">Profile</span><span class="p">.</span><span class="nv">Data</span><span class="w">   </span><span class="p">[</span><span class="nb">table</span><span class="p">]</span>
+</code></pre></div>
+This is the data that would resemble player progress or other data you wish to save to the <a href="https://create.roblox.com/docs/cloud-services/data-stores">DataStore</a>.
+Changes to <code>Profile.Data</code> are guaranteed to save as long as you do so after checking for the condition <code>Profile:IsActive() == true</code> or
+before the signal <code>Profile.OnSessionEnd</code> is triggered. The result of <code>Profile:IsActive()</code> can change at any moment, so critical data should
+be stored to <code>Profile.Data</code> immediately after checking without yielding (e.g. <code>task.wait()</code>). If needed, you may set <code>Profile.Data</code>
+to a new table reference (e.g. <code>Profile.Data = {}</code>). When <code>Profile:IsActive()</code> returns <code>false</code> changes to <code>Profile.Data</code> are no longer
+stored to the DataStore.</p>
+<h3 id="lastsaveddata">.LastSavedData</h3>
+<p><div class="highlight"><pre><span></span><code><span class="nv">Profile</span><span class="p">.</span><span class="nv">LastSavedData</span><span class="w">   </span><span class="p">[</span><span class="nb">table</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="nv">read</span><span class="o">-</span><span class="nv">only</span><span class="p">)</span>
+</code></pre></div>
+This is a version of <code>Profile.Data</code> that has been successfully stored to the DataStore. Useful for
+verifying what particular data has been saved, or for securely handling developer product purchases.</p>
+<h3 id="firstsessiontime">.FirstSessionTime</h3>
+<p><div class="highlight"><pre><span></span><code><span class="nv">Profile</span><span class="p">.</span><span class="nv">FirstSessionTime</span><span class="w">   </span><span class="p">[</span><span class="nv">number</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="nv">read</span><span class="o">-</span><span class="nv">only</span><span class="p">)</span><span class="w"> </span><span class="c1">-- Unix time</span>
+</code></pre></div>
+A <a href="https://en.wikipedia.org/wiki/Unix_time">Unix timestamp</a> of when the profile was created.</p>
+<h3 id="sessionloadcount">.SessionLoadCount</h3>
+<p><div class="highlight"><pre><span></span><code><span class="nv">Profile</span><span class="p">.</span><span class="nv">SessionLoadCount</span><span class="w">   </span><span class="p">[</span><span class="nv">number</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="nv">read</span><span class="o">-</span><span class="nv">only</span><span class="p">)</span>
+</code></pre></div>
+Amount of times a session has been started for this profile.</p>
+<h3 id="session">.Session</h3>
+<p><div class="highlight"><pre><span></span><code><span class="nv">Profile</span><span class="p">.</span><span class="nv">Session</span><span class="w">   </span><span class="p">[</span><span class="nb">table</span><span class="err">?</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="nv">read</span><span class="o">-</span><span class="nv">only</span><span class="p">)</span><span class="w"> </span><span class="c1">-- nil or {PlaceId = number, JobId = string}</span>
+</code></pre></div>
+This value never changes after a profile object is created. After you start a session for a profile,
+the <code>Profile.Session</code> will be equal to a <code>table</code> with it's <code>PlaceId</code> and <code>JobId</code> members set to the server you started
+the session on. After you read a profile using <a href="#getasync">ProfileStore:GetAsync()</a>, <code>Profile.Session</code>
+may be equal to <code>nil</code> or a <code>table</code> with it's <code>PlaceId</code> and <code>JobId</code> members set to the server that currently
+has a session started for the profile.</p>
+<h3 id="robloxmetadata">.RobloxMetaData</h3>
+<div class="highlight"><pre><span></span><code><span class="nv">Profile</span><span class="p">.</span><span class="nv">RobloxMetaData</span><span class="w">   </span><span class="p">[</span><span class="nb">table</span><span class="p">]</span>
+</code></pre></div>
+<div class="admonition failure">
+<p class="admonition-title">Be cautious of very harsh limits for maximum Roblox Metadata size - As of writing this, total table content size cannot exceed 300 characters.</p>
+</div>
+<p>A table that gets saved as <a href="https://create.roblox.com/docs/cloud-services/data-stores#metadata">Metadata (Official documentation)</a> of a DataStore key belonging to the profile.
+The way this table is saved is equivalent to using <code>DataStoreSetOptions:SetMetaData(Profile.RobloxMetaData)</code> and passing the <code>DataStoreSetOptions</code> object to a <code>:SetAsync()</code> call,
+except changes will truly get saved on the next auto-save cycle or when the profile session is ended. Info
+on Roblox metadata limits <a href="https://create.roblox.com/docs/cloud-services/data-stores/error-codes-and-limits#metadata-limits">can be found here</a>.</p>
+<h3 id="userids">.UserIds</h3>
+<p><div class="highlight"><pre><span></span><code><span class="nv">Profile</span><span class="p">.</span><span class="nv">UserIds</span><span class="w"> </span><span class="p">[</span><span class="nb">table</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="nv">read</span><span class="o">-</span><span class="nv">only</span><span class="p">)</span><span class="w"> </span><span class="c1">-- {user_id [number], ...}</span>
+</code></pre></div>
+User ids associated with this profile. Entries must be added with <a href="#adduserid">Profile:AddUserId()</a> and removed with <a href="#removeuserid">Profile:RemoveUserId()</a>.</p>
+<h3 id="keyinfo">.KeyInfo</h3>
+<p><div class="highlight"><pre><span></span><code><span class="nv">Profile</span><span class="p">.</span><span class="nv">KeyInfo</span><span class="w"> </span><span class="p">[</span><span class="nv">DataStoreKeyInfo</span><span class="p">]</span>
+</code></pre></div>
+The <a href="https://create.roblox.com/docs/reference/engine/classes/DataStoreKeyInfo">DataStoreKeyInfo (Official documentation)</a>
+instance related to this profile.</p>
+<h3 id="onsave">.OnSave</h3>
+<p><div class="highlight"><pre><span></span><code><span class="nv">Profile</span><span class="p">.</span><span class="nv">OnSave</span><span class="p">:</span><span class="nc">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<span class="w">  </span><span class="nf">print</span><span class="p">(</span><span class="sb">`Profile.Data is about to be saved to the DataStore`</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+</code></pre></div>
+A signal that is fired right before whenever changes to <code>Profile.Data</code> are saved to the DataStore. Changes to <code>Profile.Data</code>
+are expected to save when done at the moment of <code>Profile.OnSave</code> firing, but this guarantee is no longer valid after yielding
+(e.g. using <code>task.wait()</code> or <code>:WaitForChild()</code>) and the condition <code>Profile:IsActive() == true</code> would have to be used instead.
+<code>Profile.OnSave</code> will be fired before every auto-save, before a manual save caused by <code>Profile:Save()</code> and before a final save
+after a session has been ended.</p>
+<h3 id="onlastsave">.OnLastSave</h3>
+<p><div class="highlight"><pre><span></span><code><span class="nv">Profile</span><span class="p">.</span><span class="nv">OnLastSave</span><span class="p">:</span><span class="nc">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">reason</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Manual&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="s2">&quot;External&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="s2">&quot;Shutdown&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="nf">print</span><span class="p">(</span><span class="sb">`Profile.Data is about to be saved to the DataStore for the last time; Reason: </span><span class="p">{</span><span class="nv">reason</span><span class="p">}</span><span class="sb">`</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+</code></pre></div>
+A signal that is fired right before changes to <code>Profile.Data</code> are saved to the DataStore for the last time. Changes to <code>Profile.Data</code>
+are expected to save when done at the moment of <code>Profile.OnLastSave</code> firing, but this guarantee is no longer valid after yielding
+(e.g. using <code>task.wait()</code> or <code>:WaitForChild()</code>). <code>Profile.OnLastSave</code> will be fired after a session has ended in one of three ways:</p>
+<ul>
+<li><strong><code>"Manual"</code></strong> - Developer code called <code>Profile:EndSession()</code></li>
+<li><strong><code>"External"</code></strong> - Another server started a session for the same profile</li>
+<li><strong><code>"Shutdown"</code></strong> - The profile session has been ended automatically due to the server shutting down</li>
+</ul>
+<p>One of <code>Profile.OnLastSave</code> uses is giving "logout penalties" where a player may receive punishment for
+closing the game at the wrong time. Example:
+<div class="highlight"><pre><span></span><code><span class="kd">local</span><span class="w"> </span><span class="nv">InCombat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span>
+
+<span class="nv">Profile</span><span class="p">.</span><span class="nv">OnLastSave</span><span class="p">:</span><span class="nc">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">reason</span><span class="p">)</span>
+<span class="w">  </span><span class="kr">if</span><span class="w"> </span><span class="nv">reason</span><span class="w"> </span><span class="o">~=</span><span class="w"> </span><span class="s2">&quot;Shutdown&quot;</span><span class="w"> </span><span class="kr">then</span>
+
+<span class="w">    </span><span class="nf">print</span><span class="p">(</span><span class="sb">`The cause of the session ending is not due to a server shutdown`</span><span class="p">)</span>
+
+<span class="w">    </span><span class="c1">-- If you didn&#39;t want the player to logout at this particular moment,</span>
+<span class="w">    </span><span class="c1">-- this should be where you&#39;d penalize the player. e.g.:</span>
+
+<span class="w">    </span><span class="kr">if</span><span class="w"> </span><span class="nv">InCombat</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="kr">then</span>
+<span class="w">      </span><span class="nv">Profile</span><span class="p">.</span><span class="nv">Data</span><span class="p">.</span><span class="nv">Coins</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="mf">100</span>
+<span class="w">    </span><span class="kr">end</span>
+
+<span class="w">  </span><span class="kr">end</span>
+<span class="kr">end</span><span class="p">)</span>
+</code></pre></div></p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>On rare occasions Roblox servers can crash and <code>Profile.OnLastSave</code> might never get the chance to fire.
+You should design your data saving code in a way where reacting to <code>Profile.OnLastSave</code> is not critical.</p>
+</div>
+<h3 id="onsessionend">.OnSessionEnd</h3>
+<p><div class="highlight"><pre><span></span><code><span class="nv">Profile</span><span class="p">.</span><span class="nv">OnSessionEnd</span><span class="p">:</span><span class="nc">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<span class="w">  </span><span class="nf">print</span><span class="p">(</span><span class="sb">`Profile session has ended - Profile.Data will no longer be saved to the DataStore`</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+</code></pre></div>
+The <code>Profile.OnSessionEnd</code> signal can be fired after the developer calls <a href="#endsession"><code>Profile:EndSession()</code></a>,
+Another server calls [<code>ProfileStore:StartSessionAsync()</code>] for the same profile or when the server is shutting down.
+After the <code>Profile.OnSessionEnd</code> signal is fired, no further changes to <code>Profile.Data</code> should be made.
+<code>Profile.OnSessionEnd</code> will fire even when a profile session is stolen, whereas <code>Profile.OnLastSave</code> would not.
+In some cases it would be preferable to kick the player from the game when this signal is fired:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">Profile</span><span class="p">.</span><span class="nv">OnSessionEnd</span><span class="p">:</span><span class="nc">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">()</span>
+<span class="w">  </span><span class="nv">player</span><span class="p">:</span><span class="nc">Kick</span><span class="p">(</span><span class="sb">`Your data has been loaded on another server - please rejoin`</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code>Profile.OnSessionEnd</code> should not be used for applying final changes to <code>Profile.Data</code>.
+Use <code>Profile.OnLastSave</code> instead.</p>
+</div>
+<h3 id="onaftersave">.OnAfterSave</h3>
+<p><div class="highlight"><pre><span></span><code><span class="nv">Profile</span><span class="p">.</span><span class="nv">OnAfterSave</span><span class="p">:</span><span class="nc">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">last_saved_data</span><span class="p">)</span>
+<span class="w">  </span><span class="nf">print</span><span class="p">(</span><span class="sb">`Profile.Data has been successfully saved to the DataStore:`</span><span class="p">,</span><span class="w"> </span><span class="nv">last_saved_data</span><span class="p">)</span>
+<span class="kr">end</span><span class="p">)</span>
+</code></pre></div>
+This signal will fire every time after profile data has been accessed by <a href="https://create.roblox.com/docs/reference/engine/classes/GlobalDataStore#UpdateAsync"><code>GlobalDataStore:UpdateAsync()</code></a>.
+After this signal is fired, the values <a href="#lastsaveddata"><code>Profile.LastSavedData</code></a> and <a href="#keyinfo"><code>Profile.KeyInfo</code></a> will have been changed -
+<a href="#lastsaveddata"><code>Profile.LastSavedData</code></a> can be used to verify which particular changes to <a href="#data"><code>Profile.Data</code></a> have been
+successfully saved to the DataStore.</p>
+<h3 id="profilestore_1">.ProfileStore</h3>
+<p><div class="highlight"><pre><span></span><code><span class="nv">Profile</span><span class="p">.</span><span class="nv">ProfileStore</span><span class="w">   </span><span class="p">[</span><span class="nv">ProfileStore</span><span class="p">]</span><span class="w"> </span><span class="c1">-- ProfileStore object this profile belongs to</span>
+</code></pre></div>
+The <a href="#new"><code>ProfileStore</code></a> object that was used to create this profile.</p>
+<h3 id="key">.Key</h3>
+<p><div class="highlight"><pre><span></span><code><span class="nv">Profile</span><span class="p">.</span><span class="nv">Key</span><span class="w">   </span><span class="p">[</span><span class="nb">string</span><span class="p">]</span><span class="w"> </span><span class="c1">-- DataStore key</span>
+</code></pre></div>
+The DataStore key of this profile. This is the first passed argument to <a href="#startsessionasync"><code>ProfileStore:StartSessionAsync()</code></a>
+or <a href="#getasync"><code>ProfileStore:GetAsync()</code></a>.</p>
+<h3 id="isactive">:IsActive()</h3>
+<p><div class="highlight"><pre><span></span><code><span class="nv">Profile</span><span class="p">:</span><span class="nc">IsActive</span><span class="p">()</span><span class="w"> </span><span class="c1">--&gt; [bool]</span>
+</code></pre></div>
+If  <code>Profile:IsActive()</code> returns <code>true</code>, changes to <code>Profile.Data</code> will be saved - this guarantee
+will no longer be valid after yielding (e.g. using <code>task.wait()</code> or <code>:WaitForChild()</code>). When implementing in-game trading,
+you may make changes to two profiles immediately without yielding after <code>Profile:IsActive()</code> returns <code>true</code> for the two profiles.</p>
+<h3 id="reconcile">:Reconcile()</h3>
+<p><div class="highlight"><pre><span></span><code><span class="nv">Profile</span><span class="p">:</span><span class="nc">Reconcile</span><span class="p">()</span>
+</code></pre></div>
+Fills in missing variables inside <code>Profile.Data</code> from a template table that was provided as a second argument
+to <a href="#new"><code>ProfileStore.New()</code></a>. <code>Profile:Reconcile()</code> can be useful if you're making changes to your
+data template over the course of your game's development.</p>
+<h3 id="endsession">:EndSession()</h3>
+<p><div class="highlight"><pre><span></span><code><span class="nv">Profile</span><span class="p">:</span><span class="nc">EndSession</span><span class="p">()</span>
+</code></pre></div>
+Stops auto-saving for this profile and saves <code>Profile.Data</code> to the DataStore for
+the last time. Call this method after you're done working with the <code>Profile</code> object created by <a href="#startsessionasync"><code>ProfileStore:StartSessionAsync()</code></a>.</p>
+<p>Example:
+<div class="highlight"><pre><span></span><code><span class="nv">Players</span><span class="p">.</span><span class="nv">PlayerRemoving</span><span class="p">:</span><span class="nc">Connect</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">player</span><span class="p">)</span>
+
+<span class="w">  </span><span class="kd">local</span><span class="w"> </span><span class="nv">profile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Profiles</span><span class="p">[</span><span class="nv">player</span><span class="p">]</span>
+
+<span class="w">  </span><span class="kr">if</span><span class="w"> </span><span class="nv">profile</span><span class="w"> </span><span class="o">~=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="kr">then</span>
+<span class="w">    </span><span class="nv">profile</span><span class="p">:</span><span class="nc">EndSession</span><span class="p">()</span>
+<span class="w">    </span><span class="nv">Profiles</span><span class="p">[</span><span class="nv">player</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">nil</span>
+<span class="w">  </span><span class="kr">end</span>
+
+<span class="kr">end</span><span class="p">)</span>
+</code></pre></div></p>
+<h3 id="adduserid">:AddUserId()</h3>
+<p><div class="highlight"><pre><span></span><code><span class="nv">Profile</span><span class="p">:</span><span class="nc">AddUserId</span><span class="p">(</span><span class="nv">user_id</span><span class="p">)</span>
+<span class="c1">-- user_id [number]</span>
+</code></pre></div>
+Associates a <code>UserId</code> with the profile. Multiple users can be associated with a single profile by calling this method for each individual <code>UserId</code>.
+The primary use of this method is to comply with GDPR (The right to erasure). More information in <a href="https://create.roblox.com/docs/cloud-services/data-stores#metadata">official documentation</a>.</p>
+<h3 id="removeuserid">:RemoveUserId()</h3>
+<p><div class="highlight"><pre><span></span><code><span class="nv">Profile</span><span class="p">:</span><span class="nc">RemoveUserId</span><span class="p">(</span><span class="nv">user_id</span><span class="p">)</span>
+<span class="c1">-- user_id [number]</span>
+</code></pre></div>
+Unassociates a <code>UserId</code> with the profile.</p>
+<h3 id="messagehandler">:MessageHandler()</h3>
+<p><div class="highlight"><pre><span></span><code><span class="nv">Profile</span><span class="p">:</span><span class="nc">MessageHandler</span><span class="p">(</span><span class="kr">function</span><span class="p">(</span><span class="nv">message</span><span class="p">,</span><span class="w"> </span><span class="nv">processed</span><span class="p">)</span>
+<span class="w">  </span><span class="nf">print</span><span class="p">(</span><span class="sb">`Message received:`</span><span class="p">,</span><span class="w"> </span><span class="nv">message</span><span class="p">)</span>
+<span class="w">  </span><span class="nf">processed</span><span class="p">()</span>
+<span class="kr">end</span><span class="p">)</span>
+</code></pre></div>
+Sets a function that will handle existing and future incoming messages sent to this profile by <a href="#messageasync"><code>ProfileStore:MessageAsync()</code></a>.
+The <code>message</code> argument is a <code>table</code> that was passed as the second argument to <a href="#messageasync"><code>ProfileStore:MessageAsync()</code></a>.
+The <code>processed</code> argument is a function that must be called to let ProfileStore know this message has
+been processed. If a message is not processed by calling <code>processed()</code>, ProfileStore will continue to iterate through
+other functions passed to <code>Profile:MessageHandler()</code> and will broadcast the same <code>message</code>. Unprocessed messages will
+be broadcasted to new functions passed to <code>Profile:MessageHandler()</code> and will continue to do so when a profile session is started
+another time (e.g. after a player joins the game again) until <code>processed()</code> is finally called.</p>
+<h3 id="save">:Save()</h3>
+<p><div class="highlight"><pre><span></span><code><span class="nv">Profile</span><span class="p">:</span><span class="nc">Save</span><span class="p">()</span>
+</code></pre></div>
+Calling <code>Profile:Save()</code> will immediately save <code>Profile.Data</code> to the DataStore when a profile session is still active (<code>Profile:IsActive()</code> returns <code>true</code>).
+<code>Profile.Data</code> is already automatically saved to the DataStore on auto-saves and when the profile session is ended with <code>Profile:EndSession()</code>,
+so <code>Profile:Save()</code> should only be used for critical moments like ensuring data related to <a href="https://create.roblox.com/docs/production/monetization/developer-products">Developer Product</a>
+purchases are saved before a server crash could occur. The cost of calling <code>Profile:Save()</code> is one <a href="https://create.roblox.com/docs/reference/engine/classes/GlobalDataStore#UpdateAsync">:UpdateAsync()</a>
+call - see the official documentation on <a href="https://create.roblox.com/docs/cloud-services/data-stores/error-codes-and-limits#server-limits">DataStore limits</a> to
+evaluate your use case.</p>
+<h3 id="setasync">:SetAsync()</h3>
+<div class="highlight"><pre><span></span><code><span class="nv">Profile</span><span class="p">:</span><span class="nc">SetAsync</span><span class="p">()</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Only works for profiles loaded through <a href="#getasync">ProfileStore:GetAsync()</a> or <a href="#versionquery">ProfileStore:VersionQuery()</a></p>
+</div>
+<p>Saves <code>Profile.Data</code> of a profile loaded with <a href="#getasync">ProfileStore:GetAsync()</a> to the DataStore disregarding any active sessions.
+If there was a server that had an active session for that profile - that session will be ended.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.sections", "toc.integrate", "navigation.top", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.50899def.min.js"></script>
+      
+    
+  </body>
+</html>
